@@ -9,7 +9,7 @@ if (isset($_POST['login'])) {
 	 // Check if the entered credential is a valid email address
 	 if (filter_var($username_email, FILTER_VALIDATE_EMAIL)) {
         $email = $username_email;
-        $username = ''; 
+        $username = '';
     } else {
         $username = $username_email;
         $email = '';
@@ -24,7 +24,7 @@ if (isset($_POST['login'])) {
         $row = $result->fetch_assoc();
         $_SESSION['login'] = $row['username']; // Store username in session
         $_SESSION['adminid'] = $row['id'];
-        $extra = "dashboard.php";
+        $extra = "../admin/dashboard.php";
         echo "<script>window.location.href='" . $extra . "'</script>";
         exit();
     } else {
