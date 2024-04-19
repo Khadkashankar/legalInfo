@@ -1,0 +1,9 @@
+{
+    "name": "vendor/legal-info",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\LegalInfo\\": "src/"
+        }
+    },
+    "require": {}
+}
