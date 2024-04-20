@@ -72,10 +72,12 @@ if (isset($_POST['login'])) {
 										</div>
 
 
-										<div class="form-floating mb-3">
+										<div class="form-floating mb-3 d-flex align-items-center">
 											<input class="form-control" name="password" type="password" placeholder="Password" id="myInput" required />
 											<label for="inputPassword">Password</label>
-											<input type="checkbox"  onclick="myFunction()"> Show Password
+											<span class="m-4 position-absolute end-0">
+												<i class="fas fa-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
+											</span>
 										</div>
 
 
@@ -98,12 +100,18 @@ if (isset($_POST['login'])) {
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 	<script src="../admin/assets/js/script.js"></script>
 	<script>
-	 function myFunction() {
+	 function togglePasswordVisibility() {
 		 var x = document.getElementById("myInput");
+		 var toggleIcon = document.getElementById("togglePassword");
+
 		 if (x.type === "password") {
 			x.type = "text";
+			toggleIcon.classList.remove("fa-eye");
+            toggleIcon.classList.add("fa-eye-slash");
 		 } else {
 			x.type = "password";
+			toggleIcon.classList.remove("fa-eye-slash");
+            toggleIcon.classList.add("fa-eye");
 		}
 	}
 </script>
