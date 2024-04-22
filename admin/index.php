@@ -73,7 +73,7 @@ if (isset($_POST['login'])) {
 
 
 										<div class="form-floating mb-3 d-flex align-items-center">
-											<input class="form-control" name="password" type="password" placeholder="Password" id="myInput" required />
+											<input class="form-control" name="password" type="password" placeholder="Password" id="password" required />
 											<label for="inputPassword">Password</label>
 											<span class="m-4 position-absolute end-0">
 												<i class="fas fa-eye" id="togglePassword" onclick="togglePasswordVisibility()"></i>
@@ -101,7 +101,7 @@ if (isset($_POST['login'])) {
 	<script src="../admin/assets/js/script.js"></script>
 	<script>
 	 function togglePasswordVisibility() {
-		 var x = document.getElementById("myInput");
+		 var x = document.getElementById("password");
 		 var toggleIcon = document.getElementById("togglePassword");
 
 		 if (x.type === "password") {

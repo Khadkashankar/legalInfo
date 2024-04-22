@@ -26,11 +26,11 @@ $result = $conn->query($query);
 
 <body class="sb-nav-fixed">
 	<!-- header -->
-	<?php include('../admin/header.php'); ?>
+	<?php include('header.php'); ?>
 
 	<div id="layoutSidenav">
 		<!-- sidebar -->
-		<?php include('../admin/sidebar.php'); ?>
+		<?php include('sidebar.php'); ?>
 		<div id="layoutSidenav_content">
 			<div class="card mb-4">
 				<div class="card-header">
@@ -51,7 +51,6 @@ $result = $conn->query($query);
 						</thead>
 						<tbody>
 							<?php
-							// Loop through each row in the result set
 							$i = 1;
 							while ($row = mysqli_fetch_assoc($result)) {
 								echo "<tr>";
@@ -74,7 +73,7 @@ $result = $conn->query($query);
 			</div>
 
 			<!-- footer -->
-			<?php include('../admin/footer.php'); ?>
+			<?php include('footer.php'); ?>
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 			<script src="../admin/assets/js/script.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
