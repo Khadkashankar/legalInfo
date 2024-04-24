@@ -71,11 +71,13 @@ $result = $conn->query($query);
 									echo "<td>" . $row["location"] . "</td>";
 									echo "<td>" . $row["specialization"] . "</td>";
 									echo "<td>" . $row["description"] . "</td>";
-									echo "<td><img src='" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
+									echo "<td><img src='./lawyerimages/" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
 									echo "<td>" . $row["bar_association_number"] . "</td>";
 									echo "<td>" . $row["experience_years"] . "</td>";
 									echo "<td>";
-									echo "<a href='#editModal' data-toggle='modal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'><i class='fas fa-edit'></i></a>";
+									echo "<a href='#' data-toggle='modal' data-target='#editModal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'>
+												<i class='fas fa-edit'></i>
+												</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
 									echo "<a onclick='confirmDelete(" . $row['lawyer_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
 									echo "</td>";
@@ -135,7 +137,7 @@ $result = $conn->query($query);
 						</div>
 						<div class="form-group">
 							<label for="editProfilePicture">Profile Picture</label>
-							<input type="text" class="form-control" id="editProfilePicture" name="profile_picture">
+							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture">
 						</div>
 						<div class="form-group">
 							<label for="editBarAssociation">Bar Association Number</label>
@@ -171,38 +173,49 @@ $result = $conn->query($query);
 						<div class="form-group">
 							<label for="addName">Name</label>
 							<input type="text" class="form-control" id="addName" name="name">
+    						<div id="invalid-addName" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addEmail">Email</label>
 							<input type="email" class="form-control" id="addEmail" name="email">
+							<div id="invalid-addEmail" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addContact">Contact Number</label>
 							<input type="text" class="form-control" id="addContact" name="contact">
+							<div id="invalid-addContact" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addLocation">Location</label>
 							<input type="text" class="form-control" id="addLocation" name="location">
+							<div id="invalid-addLocation" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addSpecialization">Specialization</label>
 							<input type="text" class="form-control" id="addSpecialization" name="specialization">
+							<div id="invalid-addSpecialization" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addDescription">Description</label>
 							<textarea class="form-control" id="addDescription" name="description"></textarea>
+							<div id="invalid-addDescription" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="addProfilePicture" name="profile_picture">
+							<input type="file" class="form-control" id="addProfilePicture" name="profile_picture" onchange="previewImage(this)">
+							<img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
+							<div id="invalid-addProfilePicture" style="color:red"></div><br>
+
 						</div>
 						<div class="form-group">
 							<label for="addBarAssociation">Bar Association Number</label>
 							<input type="text" class="form-control" id="addBarAssociation" name="bar_association_number">
+							<div id="invalid-addBarAssociation" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addExperience">Experience Years</label>
 							<input type="text" class="form-control" id="addExperience" name="experience_years">
+							<div id="invalid-addExperience" style="color:red"></div><br>
 						</div>
 					</form>
 				</div>
@@ -218,13 +231,13 @@ $result = $conn->query($query);
 
 	<!-- Include Bootstrap JS -->
 					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-				<script src="../admin/assets/js/script.js"></script>
-				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-				<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2"></script>
-				<script src="../admin/assets/js/datatables-simple-demo.js"></script>
+					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+					<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+					<script src="../admin/assets/js/script.js"></script>
+					<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+					<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2"></script>
+					<script src="../admin/assets/js/datatables-simple-demo.js"></script>
 
 
 	<script>
@@ -257,44 +270,110 @@ $result = $conn->query($query);
 
 		//function to update the lawyer
 		function saveChanges() {
-			var lawyerId = $('#editLawyerId').val();
-			var name = $('#editName').val();
-			var email = $('#editEmail').val();
-			var contact = $('#editContact').val();
-			var location = $('#editLocation').val();
-			var specialization = $('#editSpecialization').val();
-			var description = $('#editDescription').val();
-			var profilePicture = $('#editProfilePicture').val();
-			var barAssociation = $('#editBarAssociation').val();
-			var experience = $('#editExperience').val();
+					var lawyerId = $('#editLawyerId').val();
+					var name = $('#editName').val();
+					var email = $('#editEmail').val();
+					var contact = $('#editContact').val();
+					var location = $('#editLocation').val();
+					var specialization = $('#editSpecialization').val();
+					var description = $('#editDescription').val();
+					var profilePicture = $("#addProfilePicture")[0].files[0];
+					var barAssociation = $('#editBarAssociation').val();
+					var experience = $('#editExperience').val();
 
-			$.ajax({
-				type: "POST",
-				url: "update_lawyers.php",
-				data: {
-					id: lawyerId,
-					name: name,
-					email: email,
-					contact: contact,
-					location: location,
-					specialization: specialization,
-					description: description,
-					profile_picture: profilePicture,
-					bar_association_number: barAssociation,
-					experience_years: experience
-				},
-				success: function(response) {
-					Swal.fire({
-						icon: 'success',
-						title: 'Lawyer Updated Successfully',
-						confirmButtonText: 'OK',
-						timer: 3000
-					}).then((result) => {
-							window.location.reload();
-					});
-				},
-			});
-		}
+					var isValid = true;
+
+					if (!name) {
+						$("#invalid-addName").text("Name cannot be Empty !");
+						var isValid = false;
+					}
+
+					if (!email) {
+						$("#invalid-addEmail").text("Email cannot be Empty !");
+						var isValid = false;
+					}
+
+					if (!contact) {
+       					 $("#invalid-addContact").text("Contact cannot be Empty!");
+       					 isValid = false;
+					} else if (contact.length !== 10) {
+							$("#invalid-addContact").text("Contact number must be 10 digits long!");
+							isValid = false;
+					}
+
+					if (!location) {
+						$("#invalid-addLocation").text("Location cannot be Empty!");
+						var isValid = false;
+					}
+
+					if (!specialization) {
+						$("#invalid-addSpecialization").text("Specialization cannot be Empty!");
+					}
+
+					if (!description) {
+						$("#invalid-addDescription").text("Description cannot be Empty!");
+						var isValid = false;
+					}
+
+
+					if (!profilePicture) {
+						$("#invalid-addProfilePicture").text("Image cannot be Empty!");
+						isValid = false;
+					} else {
+							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
+							if (!allowedExtensions.test(profilePicture.name)) {
+								$("#invalid-addProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+								isValid = false;
+						}
+   					}
+
+					if (!barAssociation) {
+						$("#invalid-addBarAssociation").text("Bar Association Number cannot be Empty!");
+						isValid = false;
+					} else if (isNaN(barAssociation)) {
+						$("#invalid-addBarAssociation").text("Bar Association Number must be numeric!");
+						isValid = false;
+					}
+
+					if (!experience) {
+						$("#invalid-addExperience").text("Experience cannot be Empty!");
+						isValid = false;
+					} else if (isNaN(experience)) {
+						$("#invalid-addExperience").text("Experience must be numeric!");
+						isValid = false;
+					}
+
+						if (isValid) {
+							var formData = new FormData();
+							formData.append('name', name);
+							formData.append('email', email);
+							formData.append('contact', contact);
+							formData.append('location', location);
+							formData.append('specialization', specialization);
+							formData.append('description', description);
+							formData.append('profile_picture', profilePicture);
+							formData.append('bar_association_number', barAssociation);
+							formData.append('experience_years', experience);
+
+						$.ajax({
+							type: "POST",
+							url: "update_lawyers.php",
+							data: formData,
+							processData: false,
+							contentType: false,
+							success: function(response) {
+								Swal.fire({
+									icon: 'success',
+									title: 'Lawyer Updated Successfully',
+									confirmButtonText: 'OK',
+									timer: 3000
+								}).then((result) => {
+										window.location.reload();
+								});
+							},
+						});
+					}
+				}
 
 		//function to delete the lawyer
 		function confirmDelete(lawyerId) {
@@ -340,37 +419,123 @@ $result = $conn->query($query);
 					var location = $('#addLocation').val();
 					var specialization = $('#addSpecialization').val();
 					var description = $('#addDescription').val();
-					var profilePicture = $('#addProfilePicture').val();
+					var profilePicture = $("#addProfilePicture")[0].files[0];
 					var barAssociation = $('#addBarAssociation').val();
 					var experience = $('#addExperience').val();
 
-        			$.ajax({
-						type: "POST",
-						url: "add_lawyers.php",
-						data: {
-							name: name,
-							email: email,
-							contact: contact,
-							location: location,
-							specialization: specialization,
-							description: description,
-							profile_picture: profilePicture,
-							bar_association_number: barAssociation,
-							experience_years: experience
-						},
-						success: function(response) {
-										console.log(response);
-										Swal.fire({
-											icon: 'success',
-											title: 'Lawyer Added Successfully',
-											confirmButtonText: 'OK',
-											timer: 3000
-										}).then(() => {
-											window.location.href = window.location.href;
-										});
-								},
-        			});
+					var isValid = true;
+
+					if (!name) {
+						$("#invalid-addName").text("Name cannot be Empty !");
+						var isValid = false;
+					}
+
+					if (!email) {
+						$("#invalid-addEmail").text("Email cannot be Empty !");
+						var isValid = false;
+					}
+
+					if (!contact) {
+       					 $("#invalid-addContact").text("Contact cannot be Empty!");
+       					 isValid = false;
+					} else if (contact.length !== 10) {
+							$("#invalid-addContact").text("Contact number must be 10 digits long!");
+							isValid = false;
+					}
+
+					if (!location) {
+						$("#invalid-addLocation").text("Location cannot be Empty!");
+						var isValid = false;
+					}
+
+					if (!specialization) {
+						$("#invalid-addSpecialization").text("Specialization cannot be Empty!");
+					}
+
+					if (!description) {
+						$("#invalid-addDescription").text("Description cannot be Empty!");
+						var isValid = false;
+					}
+
+
+					if (!profilePicture) {
+						$("#invalid-addProfilePicture").text("Image cannot be Empty!");
+						isValid = false;
+					} else {
+							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
+							if (!allowedExtensions.test(profilePicture.name)) {
+								$("#invalid-addProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+								isValid = false;
+						}
+   					}
+
+					if (!barAssociation) {
+						$("#invalid-addBarAssociation").text("Bar Association Number cannot be Empty!");
+						isValid = false;
+					} else if (isNaN(barAssociation)) {
+						$("#invalid-addBarAssociation").text("Bar Association Number must be numeric!");
+						isValid = false;
+					}
+
+					if (!experience) {
+						$("#invalid-addExperience").text("Experience cannot be Empty!");
+						isValid = false;
+					} else if (isNaN(experience)) {
+						$("#invalid-addExperience").text("Experience must be numeric!");
+						isValid = false;
+					}
+
+					if (isValid) {
+						var formData = new FormData();
+						formData.append('name', name);
+						formData.append('email', email);
+						formData.append('contact', contact);
+						formData.append('location', location);
+						formData.append('specialization', specialization);
+						formData.append('description', description);
+						formData.append('profile_picture', profilePicture);
+						formData.append('bar_association_number', barAssociation);
+						formData.append('experience_years', experience);
+						$.ajax({
+							type: "POST",
+							url: "add_lawyers.php",
+							data: formData,
+							processData: false,
+							contentType: false,
+							success: function(response) {
+											console.log(response);
+											Swal.fire({
+												icon: 'success',
+												title: 'Lawyer Added Successfully',
+												confirmButtonText: 'OK',
+												timer: 3000
+											}).then(() => {
+												window.location.href = window.location.href;
+											});
+									},
+						});
+					}
 		}
+
+		//preview the image
+		function previewImage(input) {
+				var reader = new FileReader();
+
+				reader.onload = function(e) {
+					$('#imagePreview').attr('src', e.target.result);
+					$('#imagePreview').show();
+				}
+
+				reader.readAsDataURL(input.files[0]);
+		}
+
+
+
+		  // clear the error when the field is input
+		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
+					var field = $(this).attr("id");
+					$("#invalid-" + field).text("");
+    		});
 
 	</script>
 	<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
