@@ -51,21 +51,25 @@ $result = $conn->query($query);
 						</thead>
 						<tbody>
 							<?php
-							$i = 1;
-							while ($row = mysqli_fetch_assoc($result)) {
-								echo "<tr>";
-								echo "<td>" . $i++ . "</td>";
-								echo "<td>" . $row['name'] . "</td>";
-								echo "<td>" . $row['email'] . "</td>";
-								echo "<td>" . $row['phone_number'] . "</td>";
-								echo "<td>" . $row['address'] . "</td>";
-								echo "<td>";
-								echo "<a href='#editModal' data-toggle='modal' data-id='" . $row['user_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-phone='" . $row['phone_number'] . "' data-address='" . $row['address'] . "'><i class='fas fa-edit'></i></a>";
-								echo "&nbsp;&nbsp;&nbsp;&nbsp;";
-								echo "<a onclick='confirmDelete(" . $row['user_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
-								echo "</td>";
-								echo "</tr>";
-							}
+							if ($result->num_rows > 0) {
+								$i = 1;
+								while ($row = mysqli_fetch_assoc($result)) {
+									echo "<tr>";
+									echo "<td>" . $i++ . "</td>";
+									echo "<td>" . $row['name'] . "</td>";
+									echo "<td>" . $row['email'] . "</td>";
+									echo "<td>" . $row['phone_number'] . "</td>";
+									echo "<td>" . $row['address'] . "</td>";
+									echo "<td>";
+									echo "<a href='#editModal' data-toggle='modal' data-id='" . $row['user_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-phone='" . $row['phone_number'] . "' data-address='" . $row['address'] . "'><i class='fas fa-edit'></i></a>";
+									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
+									echo "<a href='#' onclick='confirmDelete(" . $row['user_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
+									echo "</td>";
+									echo "</tr>";
+								}
+							} else {
+									echo "<tr><td colspan='11'>No users found</td></tr>";
+								}
 							?>
 						</tbody>
 					</table>
@@ -74,11 +78,7 @@ $result = $conn->query($query);
 
 			<!-- footer -->
 			<?php include('footer.php'); ?>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-			<script src="../admin/assets/js/script.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-			<script src="../admin/assets/js/datatables-simple-demo.js"></script>
+
 		</div>
 	</div>
 
@@ -121,12 +121,19 @@ $result = $conn->query($query);
 		</div>
 	</div>
 
-	<!-- Include Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+			<!-- Include Bootstrap JS -->
+			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+
+			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+			<script src="../admin/assets/js/script.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
+			<script src="../admin/assets/js/datatables-simple-demo.js"></script>
+
+			<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
 	<script>

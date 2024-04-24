@@ -39,9 +39,8 @@ $result = $conn->query($query);
 					Lawyers List
 				</div>
 				<div class="d-flex justify-content-end m-3">
-    <a href="add_lawyer_form.php" class="btn btn-primary">+ Add New Lawyer</a>
-</div>
-<hr>
+                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Lawyer</button>
+                    </div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
 						<thead>
@@ -93,11 +92,7 @@ $result = $conn->query($query);
 
 			<!-- footer -->
 			<?php include('footer.php'); ?>
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-			<script src="../admin/assets/js/script.js"></script>
-			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-			<script src="../admin/assets/js/datatables-simple-demo.js"></script>
+
 		</div>
 	</div>
 
@@ -140,7 +135,7 @@ $result = $conn->query($query);
 						</div>
 						<div class="form-group">
 							<label for="editProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture">
+							<input type="text" class="form-control" id="editProfilePicture" name="profile_picture">
 						</div>
 						<div class="form-group">
 							<label for="editBarAssociation">Bar Association Number</label>
@@ -160,12 +155,76 @@ $result = $conn->query($query);
 		</div>
 	</div>
 
+	<!-- Add Modal -->
+	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="addModalLabel">Add Lawyer</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form id="addForm">
+						<input type="hidden" name="id" id="editLawyerId">
+						<div class="form-group">
+							<label for="addName">Name</label>
+							<input type="text" class="form-control" id="addName" name="name">
+						</div>
+						<div class="form-group">
+							<label for="addEmail">Email</label>
+							<input type="email" class="form-control" id="addEmail" name="email">
+						</div>
+						<div class="form-group">
+							<label for="addContact">Contact Number</label>
+							<input type="text" class="form-control" id="addContact" name="contact">
+						</div>
+						<div class="form-group">
+							<label for="addLocation">Location</label>
+							<input type="text" class="form-control" id="addLocation" name="location">
+						</div>
+						<div class="form-group">
+							<label for="addSpecialization">Specialization</label>
+							<input type="text" class="form-control" id="addSpecialization" name="specialization">
+						</div>
+						<div class="form-group">
+							<label for="addDescription">Description</label>
+							<textarea class="form-control" id="addDescription" name="description"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="addProfilePicture">Profile Picture</label>
+							<input type="file" class="form-control" id="addProfilePicture" name="profile_picture">
+						</div>
+						<div class="form-group">
+							<label for="addBarAssociation">Bar Association Number</label>
+							<input type="text" class="form-control" id="addBarAssociation" name="bar_association_number">
+						</div>
+						<div class="form-group">
+							<label for="addExperience">Experience Years</label>
+							<input type="text" class="form-control" id="addExperience" name="experience_years">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" onclick="addChanges()">Save Changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
 	<!-- Include Bootstrap JS -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+				<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+				<script src="../admin/assets/js/script.js"></script>
+				<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+				<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2"></script>
+				<script src="../admin/assets/js/datatables-simple-demo.js"></script>
 
 
 	<script>
@@ -211,7 +270,7 @@ $result = $conn->query($query);
 
 			$.ajax({
 				type: "POST",
-				url: "update_lawyer.php",
+				url: "update_lawyers.php",
 				data: {
 					id: lawyerId,
 					name: name,
@@ -231,7 +290,7 @@ $result = $conn->query($query);
 						confirmButtonText: 'OK',
 						timer: 3000
 					}).then((result) => {
-							location.reload();
+							window.location.reload();
 					});
 				},
 			});
@@ -251,7 +310,7 @@ $result = $conn->query($query);
 						if (result.isConfirmed) {
 							$.ajax({
 								type: 'POST',
-								url: 'delete_lawyer.php',
+								url: 'delete_lawyers.php',
 								data: { id: lawyerId },
 								success: function(response) {
 									Swal.fire({
@@ -268,8 +327,53 @@ $result = $conn->query($query);
     			});
 		}
 
+		//function to show the add modal
+		function showAddForm() {
+        	$('#addModal').modal('show');
+    	}
+
+		//function to add new lawyer
+		function addChanges() {
+					var name = $('#addName').val();
+					var email = $('#addEmail').val();
+					var contact = $('#addContact').val();
+					var location = $('#addLocation').val();
+					var specialization = $('#addSpecialization').val();
+					var description = $('#addDescription').val();
+					var profilePicture = $('#addProfilePicture').val();
+					var barAssociation = $('#addBarAssociation').val();
+					var experience = $('#addExperience').val();
+
+        			$.ajax({
+						type: "POST",
+						url: "add_lawyers.php",
+						data: {
+							name: name,
+							email: email,
+							contact: contact,
+							location: location,
+							specialization: specialization,
+							description: description,
+							profile_picture: profilePicture,
+							bar_association_number: barAssociation,
+							experience_years: experience
+						},
+						success: function(response) {
+										console.log(response);
+										Swal.fire({
+											icon: 'success',
+											title: 'Lawyer Added Successfully',
+											confirmButtonText: 'OK',
+											timer: 3000
+										}).then(() => {
+											window.location.href = window.location.href;
+										});
+								},
+        			});
+		}
+
 	</script>
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
 
 </body>
 
