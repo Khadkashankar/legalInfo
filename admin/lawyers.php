@@ -114,38 +114,49 @@ $result = $conn->query($query);
 						<div class="form-group">
 							<label for="editName">Name</label>
 							<input type="text" class="form-control" id="editName" name="name">
+							<div id="invalid-editName" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editEmail">Email</label>
 							<input type="email" class="form-control" id="editEmail" name="email">
+							<div id="invalid-editEmail" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editContact">Contact Number</label>
 							<input type="text" class="form-control" id="editContact" name="contact">
+							<div id="invalid-editContact" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editLocation">Location</label>
 							<input type="text" class="form-control" id="editLocation" name="location">
+							<div id="invalid-editLocation" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editSpecialization">Specialization</label>
 							<input type="text" class="form-control" id="editSpecialization" name="specialization">
+							<div id="invalid-editSpecialization" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editDescription">Description</label>
 							<textarea class="form-control" id="editDescription" name="description"></textarea>
+							<div id="invalid-editDescription" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture">
+							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture" onchange="previewImage(this)">
+							<img id="currentProfilePicture" src="./lawyerimages/<?php echo $row['profile_picture']; ?>" alt="Current Profile Picture" style="max-width: 100px; max-height: 100px;">
+							<img id="editProfilePicturePreview" src="#" alt="New Profile Picture Preview" style="max-width: 100px; max-height: 100px; display: none;">
+							<div id="invalid-editProfilePicture" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editBarAssociation">Bar Association Number</label>
 							<input type="text" class="form-control" id="editBarAssociation" name="bar_association_number">
+							<div id="invalid-editBarAssociation" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="editExperience">Experience Years</label>
 							<input type="text" class="form-control" id="editExperience" name="experience_years">
+    						<div id="invalid-editExperience" style="color:red"></div><br>
 						</div>
 					</form>
 				</div>
@@ -263,7 +274,7 @@ $result = $conn->query($query);
 			modal.find('.modal-body #editLocation').val(location);
 			modal.find('.modal-body #editSpecialization').val(specialization);
 			modal.find('.modal-body #editDescription').val(description);
-			modal.find('.modal-body #editProfilePicture').val(profilePicture);
+			modal.find('.modal-body #currentProfilePicture').attr('src', './lawyerimages/' + profilePicture);
 			modal.find('.modal-body #editBarAssociation').val(barAssociation);
 			modal.find('.modal-body #editExperience').val(experience);
 		});
@@ -277,103 +288,103 @@ $result = $conn->query($query);
 					var location = $('#editLocation').val();
 					var specialization = $('#editSpecialization').val();
 					var description = $('#editDescription').val();
-					var profilePicture = $("#addProfilePicture")[0].files[0];
+					var profilePicture = $("#editProfilePicture")[0].files[0];
 					var barAssociation = $('#editBarAssociation').val();
 					var experience = $('#editExperience').val();
-
 					var isValid = true;
 
 					if (!name) {
-						$("#invalid-addName").text("Name cannot be Empty !");
+						$("#invalid-editName").text("Name cannot be Empty !");
 						var isValid = false;
 					}
 
 					if (!email) {
-						$("#invalid-addEmail").text("Email cannot be Empty !");
+						$("#invalid-editEmail").text("Email cannot be Empty !");
 						var isValid = false;
 					}
 
 					if (!contact) {
-       					 $("#invalid-addContact").text("Contact cannot be Empty!");
+       					 $("#invalid-editContact").text("Contact cannot be Empty!");
        					 isValid = false;
 					} else if (contact.length !== 10) {
-							$("#invalid-addContact").text("Contact number must be 10 digits long!");
+							$("#invalid-editContact").text("Contact number must be 10 digits long!");
 							isValid = false;
 					}
 
 					if (!location) {
-						$("#invalid-addLocation").text("Location cannot be Empty!");
+						$("#invalid-editLocation").text("Location cannot be Empty!");
 						var isValid = false;
 					}
 
 					if (!specialization) {
-						$("#invalid-addSpecialization").text("Specialization cannot be Empty!");
+						$("#invalid-editSpecialization").text("Specialization cannot be Empty!");
 					}
 
 					if (!description) {
-						$("#invalid-addDescription").text("Description cannot be Empty!");
+						$("#invalid-editDescription").text("Description cannot be Empty!");
 						var isValid = false;
 					}
 
 
 					if (!profilePicture) {
-						$("#invalid-addProfilePicture").text("Image cannot be Empty!");
+						$("#invalid-editProfilePicture").text("Image cannot be Empty!");
 						isValid = false;
-					} else {
+						} else {
 							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
 							if (!allowedExtensions.test(profilePicture.name)) {
-								$("#invalid-addProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+								$("#invalid-editProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
 								isValid = false;
 						}
    					}
 
 					if (!barAssociation) {
-						$("#invalid-addBarAssociation").text("Bar Association Number cannot be Empty!");
+						$("#invalid-editBarAssociation").text("Bar Association Number cannot be Empty!");
 						isValid = false;
 					} else if (isNaN(barAssociation)) {
-						$("#invalid-addBarAssociation").text("Bar Association Number must be numeric!");
+						$("#invalid-editBarAssociation").text("Bar Association Number must be numeric!");
 						isValid = false;
 					}
 
 					if (!experience) {
-						$("#invalid-addExperience").text("Experience cannot be Empty!");
+						$("#invalid-editExperience").text("Experience cannot be Empty!");
 						isValid = false;
 					} else if (isNaN(experience)) {
-						$("#invalid-addExperience").text("Experience must be numeric!");
+						$("#invalid-editExperience").text("Experience must be numeric!");
 						isValid = false;
 					}
 
 						if (isValid) {
-							var formData = new FormData();
-							formData.append('name', name);
-							formData.append('email', email);
-							formData.append('contact', contact);
-							formData.append('location', location);
-							formData.append('specialization', specialization);
-							formData.append('description', description);
-							formData.append('profile_picture', profilePicture);
-							formData.append('bar_association_number', barAssociation);
-							formData.append('experience_years', experience);
+								var formData = new FormData();
+								formData.append('id', lawyerId);
+								formData.append('name', name);
+								formData.append('email', email);
+								formData.append('contact', contact);
+								formData.append('location', location);
+								formData.append('specialization', specialization);
+								formData.append('description', description);
+								formData.append('profile_picture', profilePicture);
+								formData.append('bar_association_number', barAssociation);
+								formData.append('experience_years', experience);
 
-						$.ajax({
-							type: "POST",
-							url: "update_lawyers.php",
-							data: formData,
-							processData: false,
-							contentType: false,
-							success: function(response) {
-								Swal.fire({
-									icon: 'success',
-									title: 'Lawyer Updated Successfully',
-									confirmButtonText: 'OK',
-									timer: 3000
-								}).then((result) => {
-										window.location.reload();
-								});
-							},
-						});
-					}
-				}
+							$.ajax({
+								type: "POST",
+								url: "update_lawyers.php",
+								data: formData,
+								processData: false,
+								contentType: false,
+								success: function(response) {
+									Swal.fire({
+										icon: 'success',
+										title: 'Lawyer Updated Successfully',
+										confirmButtonText: 'OK',
+										timer: 3000
+									}).then((result) => {
+											window.location.reload();
+									});
+								},
+							});
+					    }
+		}
 
 		//function to delete the lawyer
 		function confirmDelete(lawyerId) {
@@ -529,13 +540,29 @@ $result = $conn->query($query);
 				reader.readAsDataURL(input.files[0]);
 		}
 
+		function previewImage(input) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#editProfilePicturePreview').attr('src', e.target.result).show();
+				$('#currentProfilePicture').hide(); // Hide the current profile picture
+			}
+
+			reader.readAsDataURL(input.files[0]);
+		}
+
+		  // clear the error when the field is input for edit
+			$("#editName, #editEmail, #editContact, #editLocation, #editSpecialization, #editDescription, #editProfilePicture, #editBarAssociation, #editExperience").on("input", function () {
+						var field = $(this).attr("id");
+						$("#invalid-" + field).text("");
+			});
 
 
 		  // clear the error when the field is input
 		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
-    		});
+    	});
 
 	</script>
 	<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
