@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 
 INSERT INTO `admin` (`username`, `email`, `password`) VALUES
-('admin', 'admin@gmail.com', '1234');
+('admin', 'admin@gmail.com', '0192023a7bbd73250516f069df18b500');
 
 CREATE TABLE IF NOT EXISTS `users` (
     `user_id` INT AUTO_INCREMENT PRIMARY KEY,

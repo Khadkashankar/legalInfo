@@ -520,7 +520,6 @@ $result = $conn->query($query);
 							processData: false,
 							contentType: false,
 							success: function(response) {
-											console.log(response);
 											Swal.fire({
 												icon: 'success',
 												title: 'Lawyer Added Successfully',

@@ -53,6 +53,7 @@ $result = $conn->query($query);
 								<th>Email</th>
 								<th>Phone</th>
 								<th>Address</th>
+								<th>Gender</th>
 								<th>Action</th>
 							</tr>
 						</thead>
@@ -67,6 +68,7 @@ $result = $conn->query($query);
 									echo "<td>" . $row['email'] . "</td>";
 									echo "<td>" . $row['phone_number'] . "</td>";
 									echo "<td>" . $row['address'] . "</td>";
+									echo "<td>" . $row['gender'] . "</td>";
 									echo "<td>";
 									echo "<a href='#editModal' data-toggle='modal' data-id='" . $row['user_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-phone='" . $row['phone_number'] . "' data-address='" . $row['address'] . "'><i class='fas fa-edit'></i></a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
