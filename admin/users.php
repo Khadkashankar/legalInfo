@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: index.php");
+    exit();
+}
 include('../includes/connection.php');
 
 // Fetch user records from the database
@@ -35,7 +42,7 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Register User
+					Users List
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
@@ -225,6 +232,5 @@ $result = $conn->query($query);
 
 
 <?php
-// Don't forget to close the database connection
 mysqli_close($conn);
 ?>

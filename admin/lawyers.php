@@ -1,7 +1,13 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['login'])) {
+    header("Location: index.php");
+    exit();
+}
 include('../includes/connection.php');
 
-// Fetch lawyer records from the database
 $query = "SELECT * FROM lawyers";
 $result = $conn->query($query);
 
@@ -558,21 +564,18 @@ $result = $conn->query($query);
 			});
 
 
-		  // clear the error when the field is input
+		  // clear the error when the field is input for add
 		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
     	});
 
 	</script>
-	<!-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script> -->
-
 </body>
 
 </html>
 
 
 <?php
-// Don't forget to close the database connection
 mysqli_close($conn);
 ?>

@@ -1,9 +1,8 @@
 <?php
 session_start();
 
-// Check if user is not logged in, redirect to login page
 if (! isset($_SESSION['login'])) {
-    header("Location: ../admin/index.php"); // Redirect to the login page
+    header("Location: ../admin/index.php");
     exit();
 }
 ?>
