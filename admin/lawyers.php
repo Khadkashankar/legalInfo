@@ -42,7 +42,7 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Lawyers List
+					Dashboard / Lawyers
 				</div>
 				<div class="d-flex justify-content-end m-3">
                         <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Lawyer</button>

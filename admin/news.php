@@ -42,57 +42,26 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Lawyers List
+					Dashboard / News
 				</div>
 				<div class="d-flex justify-content-end m-3">
-                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Lawyer</button>
+                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add News</button>
                     </div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
 						<thead>
 							<tr>
 								<th>S.N</th>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Contact Number</th>
-								<th>Location</th>
-								<th>Specialization</th>
+								<th>News Title</th>
+								<th>Content</th>
 								<th>Description</th>
-								<th>Profile Picture</th>
-								<th>Bar Association Number</th>
-								<th>Experience Years</th>
+								<th>Image</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php
-							if ($result->num_rows > 0) {
-								$i = 1;
-								while ($row = $result->fetch_assoc()) {
-									echo "<tr>";
-									echo "<td>" . $i++ . "</td>";
-									echo "<td>" . $row["name"] . "</td>";
-									echo "<td>" . $row["email"] . "</td>";
-									echo "<td>" . $row["contact_number"] . "</td>";
-									echo "<td>" . $row["location"] . "</td>";
-									echo "<td>" . $row["specialization"] . "</td>";
-									echo "<td>" . $row["description"] . "</td>";
-									echo "<td><img src='./lawyerimages/" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
-									echo "<td>" . $row["bar_association_number"] . "</td>";
-									echo "<td>" . $row["experience_years"] . "</td>";
-									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editModal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'>
-												<i class='fas fa-edit'></i>
-												</a>";
-									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
-									echo "<a onclick='confirmDelete(" . $row['lawyer_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
-									echo "</td>";
-									echo "</tr>";
-								}
-							} else {
-								echo "<tr><td colspan='11'>No lawyers found</td></tr>";
-							}
-							?>
+							<!--  -->
 						</tbody>
 					</table>
 				</div>
@@ -175,74 +144,58 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Add Modal -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addModalLabel">Add Lawyer</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="addForm">
-						<input type="hidden" name="id" id="editLawyerId">
-						<div class="form-group">
-							<label for="addName">Name</label>
-							<input type="text" class="form-control" id="addName" name="name">
-    						<div id="invalid-addName" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addEmail">Email</label>
-							<input type="email" class="form-control" id="addEmail" name="email">
-							<div id="invalid-addEmail" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addContact">Contact Number</label>
-							<input type="text" class="form-control" id="addContact" name="contact">
-							<div id="invalid-addContact" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addLocation">Location</label>
-							<input type="text" class="form-control" id="addLocation" name="location">
-							<div id="invalid-addLocation" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addSpecialization">Specialization</label>
-							<input type="text" class="form-control" id="addSpecialization" name="specialization">
-							<div id="invalid-addSpecialization" style="color:red"></div><br>
+	<div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+   		 <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addNewsForm">
+                    <div class="form-group">
+                        <label for="addTitle">News Title</label>
+                        <input type="text" class="form-control" id="addTitle" name="title">
+                        <div id="invalid-addTitle" style="color:red"></div><br>
+                    </div>
+                    	<div class="form-group">
+							<label for="addContent">Content</label>
+							<div id="addContentEditor"></div>
+								<input type="hidden" id="addContent" name="content">
+								<div id="invalid-addContent" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addDescription">Description</label>
-							<textarea class="form-control" id="addDescription" name="description"></textarea>
+							<div id="addDescriptionEditor"></div>
+							<input type="hidden" id="addDescription" name="description">
 							<div id="invalid-addDescription" style="color:red"></div><br>
 						</div>
-						<div class="form-group">
-							<label for="addProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="addProfilePicture" name="profile_picture" onchange="previewImage(this)">
-							<img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
-							<div id="invalid-addProfilePicture" style="color:red"></div><br>
 
-						</div>
-						<div class="form-group">
-							<label for="addBarAssociation">Bar Association Number</label>
-							<input type="text" class="form-control" id="addBarAssociation" name="bar_association_number">
-							<div id="invalid-addBarAssociation" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addExperience">Experience Years</label>
-							<input type="text" class="form-control" id="addExperience" name="experience_years">
-							<div id="invalid-addExperience" style="color:red"></div><br>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" onclick="addChanges()">Save Changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
+                    <div class="form-group">
+                        <label for="addImage">Image</label>
+                        <input type="file" class="form-control" id="addImage" name="image" onchange="previewImage(this)">
+                        <img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
+                        <div id="invalid-addImage" style="color:red"></div><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="addStatus">Status</label>
+                        <select class="form-control" id="addStatus" name="status">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addNews()">Add News</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 
 
@@ -252,9 +205,13 @@ $result = $conn->query($query);
 					<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 					<script src="../admin/assets/js/script.js"></script>
+					<script src="../admin/assets/js/main.js"></script>
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 					<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2"></script>
 					<script src="../admin/assets/js/datatables-simple-demo.js"></script>
+
+					<!-- ck editor -->
+					<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
 
 
 	<script>
@@ -425,48 +382,27 @@ $result = $conn->query($query);
 
 		//function to show the add modal
 		function showAddForm() {
-        	$('#addModal').modal('show');
+        	$('#addNewsModal').modal('show');
     	}
 
 		//function to add new lawyer
-		function addChanges() {
-					var name = $('#addName').val();
-					var email = $('#addEmail').val();
-					var contact = $('#addContact').val();
-					var location = $('#addLocation').val();
-					var specialization = $('#addSpecialization').val();
+		function addNews() {
+					var title = $('#addTitle').val();
+					var content = $('#addContent').val();
 					var description = $('#addDescription').val();
-					var profilePicture = $("#addProfilePicture")[0].files[0];
-					var barAssociation = $('#addBarAssociation').val();
-					var experience = $('#addExperience').val();
+					var image = $("#addImage")[0].files[0];
+					var status = $('#addStatus').val();
 
 					var isValid = true;
 
-					if (!name) {
-						$("#invalid-addName").text("Name cannot be Empty !");
+					if (!title) {
+						$("#invalid-addTitle").text("Title cannot be Empty !");
 						var isValid = false;
 					}
 
-					if (!email) {
-						$("#invalid-addEmail").text("Email cannot be Empty !");
+					if (!content) {
+						$("#invalid-addContent").text("Content cannot be Empty !");
 						var isValid = false;
-					}
-
-					if (!contact) {
-       					 $("#invalid-addContact").text("Contact cannot be Empty!");
-       					 isValid = false;
-					} else if (contact.length !== 10) {
-							$("#invalid-addContact").text("Contact number must be 10 digits long!");
-							isValid = false;
-					}
-
-					if (!location) {
-						$("#invalid-addLocation").text("Location cannot be Empty!");
-						var isValid = false;
-					}
-
-					if (!specialization) {
-						$("#invalid-addSpecialization").text("Specialization cannot be Empty!");
 					}
 
 					if (!description) {
@@ -474,48 +410,32 @@ $result = $conn->query($query);
 						var isValid = false;
 					}
 
-
-					if (!profilePicture) {
-						$("#invalid-addProfilePicture").text("Image cannot be Empty!");
+					if (!image) {
+						$("#invalid-addImage").text("Image cannot be Empty!");
 						isValid = false;
 					} else {
 							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
-							if (!allowedExtensions.test(profilePicture.name)) {
-								$("#invalid-addProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+							if (!allowedExtensions.test(image.name)) {
+								$("#invalid-addImage").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
 								isValid = false;
 						}
    					}
 
-					if (!barAssociation) {
-						$("#invalid-addBarAssociation").text("Bar Association Number cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(barAssociation)) {
-						$("#invalid-addBarAssociation").text("Bar Association Number must be numeric!");
-						isValid = false;
-					}
-
-					if (!experience) {
-						$("#invalid-addExperience").text("Experience cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(experience)) {
-						$("#invalid-addExperience").text("Experience must be numeric!");
-						isValid = false;
+					   if (!status) {
+						$("#invalid-addStatus").text("Status cannot be Empty!");
+						var isValid = false;
 					}
 
 					if (isValid) {
 						var formData = new FormData();
-						formData.append('name', name);
-						formData.append('email', email);
-						formData.append('contact', contact);
-						formData.append('location', location);
-						formData.append('specialization', specialization);
+						formData.append('title', title);
+						formData.append('content', content);
 						formData.append('description', description);
-						formData.append('profile_picture', profilePicture);
-						formData.append('bar_association_number', barAssociation);
-						formData.append('experience_years', experience);
+						formData.append('image', image);
+						formData.append('status', status);
 						$.ajax({
 							type: "POST",
-							url: "add_lawyers.php",
+							url: "add_news.php",
 							data: formData,
 							processData: false,
 							contentType: false,
@@ -523,7 +443,7 @@ $result = $conn->query($query);
 											console.log(response);
 											Swal.fire({
 												icon: 'success',
-												title: 'Lawyer Added Successfully',
+												title: 'News Added Successfully',
 												confirmButtonText: 'OK',
 												timer: 3000
 											}).then(() => {
@@ -565,7 +485,7 @@ $result = $conn->query($query);
 
 
 		  // clear the error when the field is input for add
-		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
+		  $("#addTitle, #addContent, #addDescription, #addImage, #addStatus").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
     	});
