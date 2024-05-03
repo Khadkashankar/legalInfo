@@ -8,7 +8,7 @@ if (!isset($_SESSION['login'])) {
 }
 include('../includes/connection.php');
 
-$query = "SELECT * FROM news";
+$query = "SELECT * FROM articles";
 $result = $conn->query($query);
 
 ?>
@@ -45,14 +45,14 @@ $result = $conn->query($query);
 					Dashboard / News
 				</div>
 				<div class="d-flex justify-content-end m-3">
-                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add News</button>
+                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Articles</button>
                     </div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
 						<thead>
 							<tr>
 								<th>S.N</th>
-								<th>News Title</th>
+								<th>Articles Title</th>
 								<th>Content</th>
 								<th>Description</th>
 								<th>Image</th>
@@ -70,10 +70,10 @@ $result = $conn->query($query);
 									echo "<td>" . $row["title"] . "</td>";
 									echo "<td>" . $row["content"] . "</td>";
 									echo "<td>" . $row["description"] . "</td>";
-									echo "<td><img src='./newsimages/" . $row["image"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
+									echo "<td><img src='./articlesimages/" . $row["image"] . "' alt='image' style='width: 100px; height: auto;'></td>";
 									echo "<td>" . $row["status"] . "</td>";
 									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editNewsModal' data-id='" . $row['news_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
+									echo "<a href='#' data-toggle='modal' data-target='#editArticlesModal' data-id='" . $row['news_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
 												<i class='fas fa-edit'></i>
 												</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -82,7 +82,7 @@ $result = $conn->query($query);
 									echo "</tr>";
 								}
 							} else {
-								echo "<tr><td colspan='11'>No news found</td></tr>";
+								echo "<tr><td colspan='11'>No articles found</td></tr>";
 							}
 							?>
 						</tbody>
@@ -97,47 +97,47 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Edit Modal -->
-	<div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="editNewsModalLabel" aria-hidden="true">
+	<div class="modal fade" id="editArticlesModal" tabindex="-1" role="dialog" aria-labelledby="editArticlesModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="editNewsModalLabel">Edit Lawyer</h5>
+					<h5 class="modal-title" id="editArticlesModalLabel">Edit Lawyer</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="editNewsForm">
-						<input type="hidden" name="id" id="editNewsId">
+					<form id="editArticlesForm">
+						<input type="hidden" name="id" id="editId">
 						<div class="form-group">
-							<label for="editNewsTitle">News Title</label>
-							<input type="text" class="form-control" id="editNewsTitle" name="title">
-							<div id="invalid-editNewsTitle" style="color:red"></div><br>
+							<label for="editTitle">Article Title</label>
+							<input type="text" class="form-control" id="editTitle" name="title">
+							<div id="invalid-editTitle" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editNewsContent">Content</label>
-							<input type="text" class="form-control" id="editNewsContent" name="content">
-							<div id="invalid-editNewsContent" style="color:red"></div><br>
+							<label for="editContent">Content</label>
+							<input type="text" class="form-control" id="editContent" name="content">
+							<div id="invalid-editContent" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editNewsDescription">Description</label>
-							<textarea class="form-control" id="editNewsDescription" name="description"></textarea>
-							<div id="invalid-editNewsDescription" style="color:red"></div><br>
+							<label for="editDescription">Description</label>
+							<textarea class="form-control" id="editDescription" name="description"></textarea>
+							<div id="invalid-editDescription" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editNewsImage">Images</label>
-							<input type="file" class="form-control" id="editNewsImage" name="image" onchange="previewImage(this)">
-							<img id="currentNewsImage" src="./newsimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
-							<img id="editNewsImagePreview" src="#" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
-							<div id="invalid-editNewsImage" style="color:red"></div><br>
+							<label for="editImage">Images</label>
+							<input type="file" class="form-control" id="editImage" name="image" onchange="previewImage(this)">
+							<img id="currentImage" src="./newsimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
+							<img id="editImagePreview" src="#" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
+							<div id="invalid-editImage" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-                        <label for="editNewsStatus">Status</label>
-                        <select class="form-control" id="editNewsStatus" name="status">
+                        <label for="editStatus">Status</label>
+                        <select class="form-control" id="editStatus" name="status">
                             <option value="draft">Draft</option>
                             <option value="published">Published</option>
                         </select>
-						<div id="invalid-editNewsStatus" style="color:red"></div><br>
+						<div id="invalid-editStatus" style="color:red"></div><br>
                     </div>
 					</form>
 				</div>
@@ -150,19 +150,19 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Add Modal -->
-	<div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+	<div class="modal fade" id="addArticlesModal" tabindex="-1" role="dialog" aria-labelledby="addArticlesModalLabel" aria-hidden="true">
    		<div class="modal-dialog" role="document">
         	<div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                <h5 class="modal-title" id="addArticlesModalLabel">Add News</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="addNewsForm">
+                <form id="addArticlesForm">
                     <div class="form-group">
-                        <label for="addTitle">News Title</label>
+                        <label for="addTitle">Articles Title</label>
                         <input type="text" class="form-control" id="addTitle" name="title">
                         <div id="invalid-addTitle" style="color:red"></div><br>
                     </div>
@@ -223,7 +223,7 @@ $result = $conn->query($query);
 
 	<script>
 		// Function to populate form fields with lawyer information when edit icon is clicked
-		$('#editNewsModal').on('show.bs.modal', function(event) {
+		$('#editArticlesModal').on('show.bs.modal', function(event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var title = button.data('title');
@@ -233,58 +233,48 @@ $result = $conn->query($query);
 			var status = button.data('status');
 
 			var modal = $(this);
-			modal.find('.modal-body #editNewsId').val(id);
-			modal.find('.modal-body #editNewsTitle').val(title);
-			modal.find('.modal-body #editNewsContent').val(content);
-			modal.find('.modal-body #editNewsDescription').val(description);
-			modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
-			modal.find('.modal-body #editNewsStatus').val(status);
+			modal.find('.modal-body #editId').val(id);
+			modal.find('.modal-body #editTitle').val(title);
+			modal.find('.modal-body #editContent').val(content);
+			modal.find('.modal-body #editDescription').val(description);
+			modal.find('.modal-body #currentImage').attr('src', './articlesimages/' + image);
+			modal.find('.modal-body #editStatus').val(status);
 		});
 
 		//function to update the lawyer
 		function saveChanges() {
-					var newsId = $('#editNewsId').val();
-					var title = $('#editNewsTitle').val();
-					var content = $('#editNewsContent').val();
-					var description = $('#editNewsDescription').val();
-					var image = $("#editNewsImage")[0].files[0];
-					var status = $('#editNewsStatus').val();
+					var articlesId = $('#editId').val();
+					var title = $('#editTitle').val();
+					var content = $('#editContent').val();
+					var description = $('#editDescription').val();
+					var image = $("#editImage")[0].files[0];
+					var status = $('#editStatus').val();
 					var isValid = true;
 
 					if (!title) {
-						$("#invalid-editNewsTitle").text("Title cannot be Empty !");
+						$("#invalid-editTitle").text("Title cannot be Empty !");
 						var isValid = false;
-					}
-
-					if (!content) {
-						$("#invalid-editNewsContent").text("Content cannot be Empty !");
-						var isValid = false;
-					}
-
-					if (!description) {
-       					 $("#invalid-editNewsDescription").text("Description cannot be Empty!");
-       					 isValid = false;
 					}
 
 					if (!image) {
-						$("#invalid-editNewsImage").text("Image cannot be Empty!");
+						$("#invalid-editImage").text("Image cannot be Empty!");
 						isValid = false;
 						} else {
 							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
 							if (!allowedExtensions.test(image.name)) {
-								$("#invalid-editNewsImage").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+								$("#invalid-editImage").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
 								isValid = false;
 						}
    					}
 
 					if (!status) {
-						$("#invalid-editNewsStatus").text("Please select one status!");
+						$("#invalid-editStatus").text("Please select one status!");
 						isValid = false;
 					}
 
 						if (isValid) {
 								var formData = new FormData();
-								formData.append('id', newsId);
+								formData.append('id', articlesId);
 								formData.append('title', title);
 								formData.append('content', content);
 								formData.append('description', description);
@@ -293,7 +283,7 @@ $result = $conn->query($query);
 
 							$.ajax({
 								type: "POST",
-								url: "update_news.php",
+								url: "update_articles.php",
 								data: formData,
 								processData: false,
 								contentType: false,
@@ -312,7 +302,7 @@ $result = $conn->query($query);
 		}
 
 		//function to delete the lawyer
-		function confirmDelete(newsId) {
+		function confirmDelete(articlesId) {
 					Swal.fire({
 						title: 'Are you sure?',
 						text: 'You won\'t be able to revert this!',
@@ -325,7 +315,7 @@ $result = $conn->query($query);
 						if (result.isConfirmed) {
 							$.ajax({
 								type: 'POST',
-								url: 'delete_news.php',
+								url: 'delete_articles.php',
 								data: { id: newsId },
 								success: function(response) {
 									Swal.fire({
@@ -344,7 +334,7 @@ $result = $conn->query($query);
 
 		//function to show the add modal
 		function showAddForm() {
-        	$('#addNewsModal').modal('show');
+        	$('#addArticlesModal').modal('show');
     	}
 
 		//function to add new lawyer
@@ -362,15 +352,6 @@ $result = $conn->query($query);
 						var isValid = false;
 					}
 
-					if (!content) {
-						$("#invalid-addContent").text("Content cannot be Empty !");
-						var isValid = false;
-					}
-
-					if (!description) {
-						$("#invalid-addDescription").text("Description cannot be Empty!");
-						var isValid = false;
-					}
 
 					if (!image) {
 						$("#invalid-addImage").text("Image cannot be Empty!");
@@ -397,7 +378,7 @@ $result = $conn->query($query);
 						formData.append('status', status);
 						$.ajax({
 							type: "POST",
-							url: "add_news.php",
+							url: "add_articles.php",
 							data: formData,
 							processData: false,
 							contentType: false,
@@ -432,15 +413,15 @@ $result = $conn->query($query);
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
-				$('#editNewsImagePreview').attr('src', e.target.result).show();
-				$('#currentNewsImage').hide();
+				$('#editImagePreview').attr('src', e.target.result).show();
+				$('#currentImage').hide();
 			}
 
 			reader.readAsDataURL(input.files[0]);
 		}
 
 		  // clear the error when the field is input for edit
-			$("#addNewsTitle, #addNewsContent, #addNewsDescription, #addNewsImage, #addNewsStatus").on("input", function () {
+			$("#addTitle, #addContent, #addDescription, #addImage, #addStatus").on("input", function () {
 						var field = $(this).attr("id");
 						$("#invalid-" + field).text("");
 			});
