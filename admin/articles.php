@@ -8,7 +8,7 @@ if (!isset($_SESSION['login'])) {
 }
 include('../includes/connection.php');
 
-$query = "SELECT * FROM lawyers";
+$query = "SELECT * FROM news";
 $result = $conn->query($query);
 
 ?>
@@ -42,55 +42,47 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Lawyers List
+					Dashboard / News
 				</div>
 				<div class="d-flex justify-content-end m-3">
-                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Lawyer</button>
+                        <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add News</button>
                     </div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
 						<thead>
 							<tr>
 								<th>S.N</th>
-								<th>Name</th>
-								<th>Email</th>
-								<th>Contact Number</th>
-								<th>Location</th>
-								<th>Specialization</th>
+								<th>News Title</th>
+								<th>Content</th>
 								<th>Description</th>
-								<th>Profile Picture</th>
-								<th>Bar Association Number</th>
-								<th>Experience Years</th>
+								<th>Image</th>
+								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php
+						<?php
 							if ($result->num_rows > 0) {
 								$i = 1;
 								while ($row = $result->fetch_assoc()) {
 									echo "<tr>";
 									echo "<td>" . $i++ . "</td>";
-									echo "<td>" . $row["name"] . "</td>";
-									echo "<td>" . $row["email"] . "</td>";
-									echo "<td>" . $row["contact_number"] . "</td>";
-									echo "<td>" . $row["location"] . "</td>";
-									echo "<td>" . $row["specialization"] . "</td>";
+									echo "<td>" . $row["title"] . "</td>";
+									echo "<td>" . $row["content"] . "</td>";
 									echo "<td>" . $row["description"] . "</td>";
-									echo "<td><img src='./lawyerimages/" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
-									echo "<td>" . $row["bar_association_number"] . "</td>";
-									echo "<td>" . $row["experience_years"] . "</td>";
+									echo "<td><img src='./newsimages/" . $row["image"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
+									echo "<td>" . $row["status"] . "</td>";
 									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editModal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'>
+									echo "<a href='#' data-toggle='modal' data-target='#editNewsModal' data-id='" . $row['news_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
 												<i class='fas fa-edit'></i>
 												</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
-									echo "<a onclick='confirmDelete(" . $row['lawyer_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
+									echo "<a onclick='confirmDelete(" . $row['news_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
 									echo "</td>";
 									echo "</tr>";
 								}
 							} else {
-								echo "<tr><td colspan='11'>No lawyers found</td></tr>";
+								echo "<tr><td colspan='11'>No news found</td></tr>";
 							}
 							?>
 						</tbody>
@@ -105,65 +97,48 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Edit Modal -->
-	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+	<div class="modal fade" id="editNewsModal" tabindex="-1" role="dialog" aria-labelledby="editNewsModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="editModalLabel">Edit Lawyer</h5>
+					<h5 class="modal-title" id="editNewsModalLabel">Edit Lawyer</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form id="editForm">
-						<input type="hidden" name="id" id="editLawyerId">
+					<form id="editNewsForm">
+						<input type="hidden" name="id" id="editNewsId">
 						<div class="form-group">
-							<label for="editName">Name</label>
-							<input type="text" class="form-control" id="editName" name="name">
-							<div id="invalid-editName" style="color:red"></div><br>
+							<label for="editNewsTitle">News Title</label>
+							<input type="text" class="form-control" id="editNewsTitle" name="title">
+							<div id="invalid-editNewsTitle" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editEmail">Email</label>
-							<input type="email" class="form-control" id="editEmail" name="email">
-							<div id="invalid-editEmail" style="color:red"></div><br>
+							<label for="editNewsContent">Content</label>
+							<input type="text" class="form-control" id="editNewsContent" name="content">
+							<div id="invalid-editNewsContent" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editContact">Contact Number</label>
-							<input type="text" class="form-control" id="editContact" name="contact">
-							<div id="invalid-editContact" style="color:red"></div><br>
+							<label for="editNewsDescription">Description</label>
+							<textarea class="form-control" id="editNewsDescription" name="description"></textarea>
+							<div id="invalid-editNewsDescription" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editLocation">Location</label>
-							<input type="text" class="form-control" id="editLocation" name="location">
-							<div id="invalid-editLocation" style="color:red"></div><br>
+							<label for="editNewsImage">Images</label>
+							<input type="file" class="form-control" id="editNewsImage" name="image" onchange="previewImage(this)">
+							<img id="currentNewsImage" src="./newsimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
+							<img id="editNewsImagePreview" src="#" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
+							<div id="invalid-editNewsImage" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editSpecialization">Specialization</label>
-							<input type="text" class="form-control" id="editSpecialization" name="specialization">
-							<div id="invalid-editSpecialization" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="editDescription">Description</label>
-							<textarea class="form-control" id="editDescription" name="description"></textarea>
-							<div id="invalid-editDescription" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="editProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture" onchange="previewImage(this)">
-							<img id="currentProfilePicture" src="./lawyerimages/<?php echo $row['profile_picture']; ?>" alt="Current Profile Picture" style="max-width: 100px; max-height: 100px;">
-							<img id="editProfilePicturePreview" src="#" alt="New Profile Picture Preview" style="max-width: 100px; max-height: 100px; display: none;">
-							<div id="invalid-editProfilePicture" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="editBarAssociation">Bar Association Number</label>
-							<input type="text" class="form-control" id="editBarAssociation" name="bar_association_number">
-							<div id="invalid-editBarAssociation" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="editExperience">Experience Years</label>
-							<input type="text" class="form-control" id="editExperience" name="experience_years">
-    						<div id="invalid-editExperience" style="color:red"></div><br>
-						</div>
+                        <label for="editNewsStatus">Status</label>
+                        <select class="form-control" id="editNewsStatus" name="status">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+						<div id="invalid-editNewsStatus" style="color:red"></div><br>
+                    </div>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -175,74 +150,59 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Add Modal -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="addModalLabel">Add Lawyer</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form id="addForm">
-						<input type="hidden" name="id" id="editLawyerId">
-						<div class="form-group">
-							<label for="addName">Name</label>
-							<input type="text" class="form-control" id="addName" name="name">
-    						<div id="invalid-addName" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addEmail">Email</label>
-							<input type="email" class="form-control" id="addEmail" name="email">
-							<div id="invalid-addEmail" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addContact">Contact Number</label>
-							<input type="text" class="form-control" id="addContact" name="contact">
-							<div id="invalid-addContact" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addLocation">Location</label>
-							<input type="text" class="form-control" id="addLocation" name="location">
-							<div id="invalid-addLocation" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addSpecialization">Specialization</label>
-							<input type="text" class="form-control" id="addSpecialization" name="specialization">
-							<div id="invalid-addSpecialization" style="color:red"></div><br>
+	<div class="modal fade" id="addNewsModal" tabindex="-1" role="dialog" aria-labelledby="addNewsModalLabel" aria-hidden="true">
+   		<div class="modal-dialog" role="document">
+        	<div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addNewsModalLabel">Add News</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addNewsForm">
+                    <div class="form-group">
+                        <label for="addTitle">News Title</label>
+                        <input type="text" class="form-control" id="addTitle" name="title">
+                        <div id="invalid-addTitle" style="color:red"></div><br>
+                    </div>
+                    	<div class="form-group">
+							<label for="addContent">Content</label>
+							<div id="addContentEditor"></div>
+								<input type="hidden" id="addContent" name="content">
+								<div id="invalid-addContent" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
 							<label for="addDescription">Description</label>
-							<textarea class="form-control" id="addDescription" name="description"></textarea>
+							<div id="addDescriptionEditor"></div>
+							<input type="hidden" id="addDescription" name="description">
 							<div id="invalid-addDescription" style="color:red"></div><br>
 						</div>
-						<div class="form-group">
-							<label for="addProfilePicture">Profile Picture</label>
-							<input type="file" class="form-control" id="addProfilePicture" name="profile_picture" onchange="previewImage(this)">
-							<img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
-							<div id="invalid-addProfilePicture" style="color:red"></div><br>
 
-						</div>
-						<div class="form-group">
-							<label for="addBarAssociation">Bar Association Number</label>
-							<input type="text" class="form-control" id="addBarAssociation" name="bar_association_number">
-							<div id="invalid-addBarAssociation" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="addExperience">Experience Years</label>
-							<input type="text" class="form-control" id="addExperience" name="experience_years">
-							<div id="invalid-addExperience" style="color:red"></div><br>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" onclick="addChanges()">Save Changes</button>
-				</div>
-			</div>
-		</div>
+                    <div class="form-group">
+                        <label for="addImage">Image</label>
+                        <input type="file" class="form-control" id="addImage" name="image" onchange="previewImage(this)">
+                        <img id="imagePreview" src="#" alt="Preview" style="display: none; max-width: 100px; max-height: 100px;">
+                        <div id="invalid-addImage" style="color:red"></div><br>
+                    </div>
+                    <div class="form-group">
+                        <label for="addStatus">Status</label>
+                        <select class="form-control" id="addStatus" name="status">
+                            <option value="draft">Draft</option>
+                            <option value="published">Published</option>
+                        </select>
+						<div id="invalid-addStatus" style="color:red"></div><br>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="addNews()">Add News</button>
+            </div>
+        </div>
+   	 </div>
 	</div>
+
 
 
 
@@ -252,136 +212,95 @@ $result = $conn->query($query);
 					<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 					<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 					<script src="../admin/assets/js/script.js"></script>
+					<script src="../admin/assets/js/main.js"></script>
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 					<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2"></script>
 					<script src="../admin/assets/js/datatables-simple-demo.js"></script>
 
+					<!-- ck editor -->
+					<script src="https://cdn.ckeditor.com/ckeditor5/41.3.1/classic/ckeditor.js"></script>
+
 
 	<script>
 		// Function to populate form fields with lawyer information when edit icon is clicked
-		$('#editModal').on('show.bs.modal', function(event) {
+		$('#editNewsModal').on('show.bs.modal', function(event) {
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
-			var name = button.data('name');
-			var email = button.data('email');
-			var contact = button.data('contact');
-			var location = button.data('location');
-			var specialization = button.data('specialization');
+			var title = button.data('title');
+			var content = button.data('content');
 			var description = button.data('description');
-			var profilePicture = button.data('profile-picture');
-			var barAssociation = button.data('bar-association');
-			var experience = button.data('experience');
+			var image = button.data('image');
+			var status = button.data('status');
 
 			var modal = $(this);
-			modal.find('.modal-body #editLawyerId').val(id);
-			modal.find('.modal-body #editName').val(name);
-			modal.find('.modal-body #editEmail').val(email);
-			modal.find('.modal-body #editContact').val(contact);
-			modal.find('.modal-body #editLocation').val(location);
-			modal.find('.modal-body #editSpecialization').val(specialization);
-			modal.find('.modal-body #editDescription').val(description);
-			modal.find('.modal-body #currentProfilePicture').attr('src', './lawyerimages/' + profilePicture);
-			modal.find('.modal-body #editBarAssociation').val(barAssociation);
-			modal.find('.modal-body #editExperience').val(experience);
+			modal.find('.modal-body #editNewsId').val(id);
+			modal.find('.modal-body #editNewsTitle').val(title);
+			modal.find('.modal-body #editNewsContent').val(content);
+			modal.find('.modal-body #editNewsDescription').val(description);
+			modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
+			modal.find('.modal-body #editNewsStatus').val(status);
 		});
 
 		//function to update the lawyer
 		function saveChanges() {
-					var lawyerId = $('#editLawyerId').val();
-					var name = $('#editName').val();
-					var email = $('#editEmail').val();
-					var contact = $('#editContact').val();
-					var location = $('#editLocation').val();
-					var specialization = $('#editSpecialization').val();
-					var description = $('#editDescription').val();
-					var profilePicture = $("#editProfilePicture")[0].files[0];
-					var barAssociation = $('#editBarAssociation').val();
-					var experience = $('#editExperience').val();
+					var newsId = $('#editNewsId').val();
+					var title = $('#editNewsTitle').val();
+					var content = $('#editNewsContent').val();
+					var description = $('#editNewsDescription').val();
+					var image = $("#editNewsImage")[0].files[0];
+					var status = $('#editNewsStatus').val();
 					var isValid = true;
 
-					if (!name) {
-						$("#invalid-editName").text("Name cannot be Empty !");
+					if (!title) {
+						$("#invalid-editNewsTitle").text("Title cannot be Empty !");
 						var isValid = false;
 					}
 
-					if (!email) {
-						$("#invalid-editEmail").text("Email cannot be Empty !");
+					if (!content) {
+						$("#invalid-editNewsContent").text("Content cannot be Empty !");
 						var isValid = false;
-					}
-
-					if (!contact) {
-       					 $("#invalid-editContact").text("Contact cannot be Empty!");
-       					 isValid = false;
-					} else if (contact.length !== 10) {
-							$("#invalid-editContact").text("Contact number must be 10 digits long!");
-							isValid = false;
-					}
-
-					if (!location) {
-						$("#invalid-editLocation").text("Location cannot be Empty!");
-						var isValid = false;
-					}
-
-					if (!specialization) {
-						$("#invalid-editSpecialization").text("Specialization cannot be Empty!");
 					}
 
 					if (!description) {
-						$("#invalid-editDescription").text("Description cannot be Empty!");
-						var isValid = false;
+       					 $("#invalid-editNewsDescription").text("Description cannot be Empty!");
+       					 isValid = false;
 					}
 
-
-					if (!profilePicture) {
-						$("#invalid-editProfilePicture").text("Image cannot be Empty!");
+					if (!image) {
+						$("#invalid-editNewsImage").text("Image cannot be Empty!");
 						isValid = false;
 						} else {
 							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
-							if (!allowedExtensions.test(profilePicture.name)) {
-								$("#invalid-editProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+							if (!allowedExtensions.test(image.name)) {
+								$("#invalid-editNewsImage").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
 								isValid = false;
 						}
    					}
 
-					if (!barAssociation) {
-						$("#invalid-editBarAssociation").text("Bar Association Number cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(barAssociation)) {
-						$("#invalid-editBarAssociation").text("Bar Association Number must be numeric!");
-						isValid = false;
-					}
-
-					if (!experience) {
-						$("#invalid-editExperience").text("Experience cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(experience)) {
-						$("#invalid-editExperience").text("Experience must be numeric!");
+					if (!status) {
+						$("#invalid-editNewsStatus").text("Please select one status!");
 						isValid = false;
 					}
 
 						if (isValid) {
 								var formData = new FormData();
-								formData.append('id', lawyerId);
-								formData.append('name', name);
-								formData.append('email', email);
-								formData.append('contact', contact);
-								formData.append('location', location);
-								formData.append('specialization', specialization);
+								formData.append('id', newsId);
+								formData.append('title', title);
+								formData.append('content', content);
 								formData.append('description', description);
-								formData.append('profile_picture', profilePicture);
-								formData.append('bar_association_number', barAssociation);
-								formData.append('experience_years', experience);
+								formData.append('image', image);
+								formData.append('status', status);
 
 							$.ajax({
 								type: "POST",
-								url: "update_lawyers.php",
+								url: "update_news.php",
 								data: formData,
 								processData: false,
 								contentType: false,
 								success: function(response) {
 									Swal.fire({
 										icon: 'success',
-										title: 'Lawyer Updated Successfully',
+										title: 'News Updated Successfully',
 										confirmButtonText: 'OK',
 										timer: 3000
 									}).then((result) => {
@@ -393,7 +312,7 @@ $result = $conn->query($query);
 		}
 
 		//function to delete the lawyer
-		function confirmDelete(lawyerId) {
+		function confirmDelete(newsId) {
 					Swal.fire({
 						title: 'Are you sure?',
 						text: 'You won\'t be able to revert this!',
@@ -406,13 +325,13 @@ $result = $conn->query($query);
 						if (result.isConfirmed) {
 							$.ajax({
 								type: 'POST',
-								url: 'delete_lawyers.php',
-								data: { id: lawyerId },
+								url: 'delete_news.php',
+								data: { id: newsId },
 								success: function(response) {
 									Swal.fire({
 										icon: 'success',
 										title: 'Deleted!',
-										text: 'Lawyer has been deleted.',
+										text: 'News has been deleted.',
 										timer: 1500
 									}).then(() => {
 										location.reload();
@@ -425,48 +344,27 @@ $result = $conn->query($query);
 
 		//function to show the add modal
 		function showAddForm() {
-        	$('#addModal').modal('show');
+        	$('#addNewsModal').modal('show');
     	}
 
 		//function to add new lawyer
-		function addChanges() {
-					var name = $('#addName').val();
-					var email = $('#addEmail').val();
-					var contact = $('#addContact').val();
-					var location = $('#addLocation').val();
-					var specialization = $('#addSpecialization').val();
+		function addNews() {
+					var title = $('#addTitle').val();
+					var content = $('#addContent').val();
 					var description = $('#addDescription').val();
-					var profilePicture = $("#addProfilePicture")[0].files[0];
-					var barAssociation = $('#addBarAssociation').val();
-					var experience = $('#addExperience').val();
+					var image = $("#addImage")[0].files[0];
+					var status = $('#addStatus').val();
 
 					var isValid = true;
 
-					if (!name) {
-						$("#invalid-addName").text("Name cannot be Empty !");
+					if (!title) {
+						$("#invalid-addTitle").text("Title cannot be Empty !");
 						var isValid = false;
 					}
 
-					if (!email) {
-						$("#invalid-addEmail").text("Email cannot be Empty !");
+					if (!content) {
+						$("#invalid-addContent").text("Content cannot be Empty !");
 						var isValid = false;
-					}
-
-					if (!contact) {
-       					 $("#invalid-addContact").text("Contact cannot be Empty!");
-       					 isValid = false;
-					} else if (contact.length !== 10) {
-							$("#invalid-addContact").text("Contact number must be 10 digits long!");
-							isValid = false;
-					}
-
-					if (!location) {
-						$("#invalid-addLocation").text("Location cannot be Empty!");
-						var isValid = false;
-					}
-
-					if (!specialization) {
-						$("#invalid-addSpecialization").text("Specialization cannot be Empty!");
 					}
 
 					if (!description) {
@@ -474,48 +372,32 @@ $result = $conn->query($query);
 						var isValid = false;
 					}
 
-
-					if (!profilePicture) {
-						$("#invalid-addProfilePicture").text("Image cannot be Empty!");
+					if (!image) {
+						$("#invalid-addImage").text("Image cannot be Empty!");
 						isValid = false;
 					} else {
 							allowedExtensions = /(\.jpeg|\.jpg|\.png)$/i;
-							if (!allowedExtensions.test(profilePicture.name)) {
-								$("#invalid-addProfilePicture").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
+							if (!allowedExtensions.test(image.name)) {
+								$("#invalid-addImage").text("Invalid image format! Only JPEG, JPG, or PNG formats are allowed.");
 								isValid = false;
 						}
    					}
 
-					if (!barAssociation) {
-						$("#invalid-addBarAssociation").text("Bar Association Number cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(barAssociation)) {
-						$("#invalid-addBarAssociation").text("Bar Association Number must be numeric!");
-						isValid = false;
-					}
-
-					if (!experience) {
-						$("#invalid-addExperience").text("Experience cannot be Empty!");
-						isValid = false;
-					} else if (isNaN(experience)) {
-						$("#invalid-addExperience").text("Experience must be numeric!");
-						isValid = false;
+					   if (!status) {
+						$("#invalid-addStatus").text("Please select one status!");
+						var isValid = false;
 					}
 
 					if (isValid) {
 						var formData = new FormData();
-						formData.append('name', name);
-						formData.append('email', email);
-						formData.append('contact', contact);
-						formData.append('location', location);
-						formData.append('specialization', specialization);
+						formData.append('title', title);
+						formData.append('content', content);
 						formData.append('description', description);
-						formData.append('profile_picture', profilePicture);
-						formData.append('bar_association_number', barAssociation);
-						formData.append('experience_years', experience);
+						formData.append('image', image);
+						formData.append('status', status);
 						$.ajax({
 							type: "POST",
-							url: "add_lawyers.php",
+							url: "add_news.php",
 							data: formData,
 							processData: false,
 							contentType: false,
@@ -523,7 +405,7 @@ $result = $conn->query($query);
 											console.log(response);
 											Swal.fire({
 												icon: 'success',
-												title: 'Lawyer Added Successfully',
+												title: 'News Added Successfully',
 												confirmButtonText: 'OK',
 												timer: 3000
 											}).then(() => {
@@ -550,22 +432,22 @@ $result = $conn->query($query);
 			var reader = new FileReader();
 
 			reader.onload = function(e) {
-				$('#editProfilePicturePreview').attr('src', e.target.result).show();
-				$('#currentProfilePicture').hide(); // Hide the current profile picture
+				$('#editNewsImagePreview').attr('src', e.target.result).show();
+				$('#currentNewsImage').hide();
 			}
 
 			reader.readAsDataURL(input.files[0]);
 		}
 
 		  // clear the error when the field is input for edit
-			$("#editName, #editEmail, #editContact, #editLocation, #editSpecialization, #editDescription, #editProfilePicture, #editBarAssociation, #editExperience").on("input", function () {
+			$("#addNewsTitle, #addNewsContent, #addNewsDescription, #addNewsImage, #addNewsStatus").on("input", function () {
 						var field = $(this).attr("id");
 						$("#invalid-" + field).text("");
 			});
 
 
 		  // clear the error when the field is input for add
-		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
+		  $("#addTitle, #addContent, #addDescription, #addImage, #addStatus").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
     	});

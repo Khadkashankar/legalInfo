@@ -1,9 +1,9 @@
 $(document).ready(function() {
     ClassicEditor
-        .create(document.querySelector('#addContentEditor'))
+        .create($('#addContentEditor')[0])
         .then(editor => {
             editor.model.document.on('change', () => {
-                document.getElementById('addContent').value = editor.getData();
+                $('#addContent').val(editor.getData());
             });
         })
         .catch(error => {
@@ -11,13 +11,15 @@ $(document).ready(function() {
         });
 
     ClassicEditor
-        .create(document.querySelector('#addDescriptionEditor'))
+        .create($('#addDescriptionEditor')[0])
         .then(editor => {
             editor.model.document.on('change', () => {
-                document.getElementById('addDescription').value = editor.getData();
+                $('#addDescription').val(editor.getData());
             });
         })
         .catch(error => {
             console.error(error);
         });
+
+
 });

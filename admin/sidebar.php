@@ -20,7 +20,7 @@
                             Appointment
                         </a>
                         <a class="nav-link" href="articles.php">
-                            <div class="sb-nav-link-icon"><i class="fas fa-articles"></i></div>
+                            <div class="sb-nav-link-icon"><i class="fas fa-file-alt"></i></div>
                             Articles
                         </a>
                         <a class="nav-link" href="news.php">
