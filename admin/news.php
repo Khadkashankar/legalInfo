@@ -237,12 +237,7 @@ $result = $conn->query($query);
     var modal = $(this);
     modal.find('.modal-body #editNewsId').val(id);
     modal.find('.modal-body #editNewsTitle').val(title);
-    // modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
-	if (image) {
-        $('#currentNewsImage').attr('src', './newsimages/' + image);
-        $('#editNewsImagePreview').attr('src', './newsimages/' + image).show();
-        $('#currentNewsImage').hide();
-    }
+    modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
     modal.find('.modal-body #editNewsStatus').val(status);
 
 				if (content) {
@@ -255,6 +250,7 @@ $result = $conn->query($query);
 								editor.model.document.on('change', () => {
 									$('#editNewsContent').val(editor.getData());
 								});
+								modal.find('.modal-body #editNewsContent').val(content);
 							})
 							.catch(error => {
 								console.error(error);
@@ -274,6 +270,8 @@ $result = $conn->query($query);
 							editor.model.document.on('change', () => {
 								$('#editNewsDescription').val(editor.getData());
 							});
+							modal.find('.modal-body #editNewsDescription').val(description);
+
 						})
 						.catch(error => {
 							console.error(error);

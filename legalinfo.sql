@@ -42,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `appointments` (
     `lawyer_id` INT,
     `appointment_date` DATE,
     `appointment_time` TIME,
+	`additional_information` TEXT,
     `status` ENUM('pending', 'confirmed', 'canceled') DEFAULT 'pending',
     FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`),
     FOREIGN KEY (`lawyer_id`) REFERENCES `lawyers`(`lawyer_id`)

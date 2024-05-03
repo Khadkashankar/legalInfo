@@ -42,7 +42,7 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Dashboard / News
+					Dashboard / Articles
 				</div>
 				<div class="d-flex justify-content-end m-3">
                         <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Articles</button>
@@ -73,11 +73,11 @@ $result = $conn->query($query);
 									echo "<td><img src='./articlesimages/" . $row["image"] . "' alt='image' style='width: 100px; height: auto;'></td>";
 									echo "<td>" . $row["status"] . "</td>";
 									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editArticlesModal' data-id='" . $row['news_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
+									echo "<a href='#' data-toggle='modal' data-target='#editArticlesModal' data-id='" . $row['article_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
 												<i class='fas fa-edit'></i>
 												</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
-									echo "<a onclick='confirmDelete(" . $row['news_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
+									echo "<a onclick='confirmDelete(" . $row['article_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
 									echo "</td>";
 									echo "</tr>";
 								}
@@ -115,19 +115,21 @@ $result = $conn->query($query);
 							<div id="invalid-editTitle" style="color:red"></div><br>
 						</div>
 						<div class="form-group">
-							<label for="editContent">Content</label>
-							<input type="text" class="form-control" id="editContent" name="content">
-							<div id="invalid-editContent" style="color:red"></div><br>
-						</div>
-						<div class="form-group">
-							<label for="editDescription">Description</label>
-							<textarea class="form-control" id="editDescription" name="description"></textarea>
-							<div id="invalid-editDescription" style="color:red"></div><br>
-						</div>
+								<label for="editContent">Content</label>
+								<div id="editContentEditor"></div>
+								<input type="hidden" id="editContent" name="content">
+								<div id="invalid-editContent" style="color:red"></div><br>
+                    		</div>
+                    			<div class="form-group">
+									<label for="editDescription">Description</label>
+									<div id="editDescriptionEditor"></div>
+									<input type="hidden" id="editDescription" name="description">
+									<div id="invalid-editDescription" style="color:red"></div><br>
+                    			</div>
 						<div class="form-group">
 							<label for="editImage">Images</label>
 							<input type="file" class="form-control" id="editImage" name="image" onchange="previewImage(this)">
-							<img id="currentImage" src="./newsimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
+							<img id="currentImage" src="./articlesimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
 							<img id="editImagePreview" src="#" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
 							<div id="invalid-editImage" style="color:red"></div><br>
 						</div>
@@ -154,7 +156,7 @@ $result = $conn->query($query);
    		<div class="modal-dialog" role="document">
         	<div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addArticlesModalLabel">Add News</h5>
+                <h5 class="modal-title" id="addArticlesModalLabel">Add Articles</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -197,7 +199,7 @@ $result = $conn->query($query);
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="addNews()">Add News</button>
+                <button type="button" class="btn btn-primary" onclick="addArticles()">Add Articles</button>
             </div>
         </div>
    	 </div>
@@ -235,10 +237,50 @@ $result = $conn->query($query);
 			var modal = $(this);
 			modal.find('.modal-body #editId').val(id);
 			modal.find('.modal-body #editTitle').val(title);
-			modal.find('.modal-body #editContent').val(content);
-			modal.find('.modal-body #editDescription').val(description);
 			modal.find('.modal-body #currentImage').attr('src', './articlesimages/' + image);
 			modal.find('.modal-body #editStatus').val(status);
+
+			if (content) {
+					if (!modal.data('contentEditor')) {
+						ClassicEditor
+							.create(document.querySelector('#editContentEditor'))
+							.then(editor => {
+								modal.data('contentEditor', editor);
+								editor.setData(content); // Populate content
+								editor.model.document.on('change', () => {
+									$('#editContent').val(editor.getData());
+								});
+							modal.find('.modal-body #editContent').val(content);
+
+							})
+							.catch(error => {
+								console.error(error);
+							});
+					} else {
+						modal.data('contentEditor').setData(content); // Populate content
+					}
+				}
+
+			if (description) {
+				if (!modal.data('descriptionEditor')) {
+					ClassicEditor
+						.create(document.querySelector('#editDescriptionEditor'))
+						.then(editor => {
+							modal.data('descriptionEditor', editor);
+							editor.setData(description); // Populate description
+							editor.model.document.on('change', () => {
+								$('#editDescription').val(editor.getData());
+							});
+							modal.find('.modal-body #editDescription').val(description);
+						})
+						.catch(error => {
+							console.error(error);
+						});
+				} else {
+					modal.data('descriptionEditor').setData(description); // Populate description
+				}
+			}
+
 		});
 
 		//function to update the lawyer
@@ -290,7 +332,7 @@ $result = $conn->query($query);
 								success: function(response) {
 									Swal.fire({
 										icon: 'success',
-										title: 'News Updated Successfully',
+										title: 'Articles Updated Successfully',
 										confirmButtonText: 'OK',
 										timer: 3000
 									}).then((result) => {
@@ -301,8 +343,8 @@ $result = $conn->query($query);
 					    }
 		}
 
-		//function to delete the lawyer
-		function confirmDelete(articlesId) {
+		//function to delete the articles
+		function confirmDelete(articleId) {
 					Swal.fire({
 						title: 'Are you sure?',
 						text: 'You won\'t be able to revert this!',
@@ -316,12 +358,12 @@ $result = $conn->query($query);
 							$.ajax({
 								type: 'POST',
 								url: 'delete_articles.php',
-								data: { id: newsId },
+								data: { id: articleId },
 								success: function(response) {
 									Swal.fire({
 										icon: 'success',
 										title: 'Deleted!',
-										text: 'News has been deleted.',
+										text: 'Articles has been deleted.',
 										timer: 1500
 									}).then(() => {
 										location.reload();
@@ -338,7 +380,7 @@ $result = $conn->query($query);
     	}
 
 		//function to add new lawyer
-		function addNews() {
+		function addArticles() {
 					var title = $('#addTitle').val();
 					var content = $('#addContent').val();
 					var description = $('#addDescription').val();
@@ -386,7 +428,7 @@ $result = $conn->query($query);
 											console.log(response);
 											Swal.fire({
 												icon: 'success',
-												title: 'News Added Successfully',
+												title: 'Articles Added Successfully',
 												confirmButtonText: 'OK',
 												timer: 3000
 											}).then(() => {
