@@ -4,7 +4,7 @@ include('./includes/connection.php');
 if(isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['address'], $_POST['phone'], $_POST['gender'])) {
     $name = $_POST['name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
+    $password = ($_POST['password']);
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $gender = $_POST['gender'];
