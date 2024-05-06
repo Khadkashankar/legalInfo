@@ -39,7 +39,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="login-form">
+                <form id="login-form" method="post">
                     <div class="mb-3">
                         <label for="login-email" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="login-email" name="email" placeholder="Enter email" required>
@@ -111,7 +111,7 @@
 					</div>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
-				<p class="mt-3">Already have an account? <a href="#" id="login-link">Login</a></p>
+				<p class="mt-3">Already have an account? <a href="" id="login-link">Login</a></p>
             </div>
         </div>
     </div>

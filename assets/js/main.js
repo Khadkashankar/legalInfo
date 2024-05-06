@@ -179,7 +179,7 @@
 						confirmButtonText: 'OK',
 						timer: 2000
 					}).then(() => {
-						window.location.href = window.location.href;
+						window.location.href = 'user-dashboard.php';
 					});
     			}
     		})
@@ -195,6 +195,27 @@
 			// Clear gender error when a gender option is selected
 			$("input[name='gender']").on("change", function () {
 				$("#invalid-gender").text("");
+			});
+
+
+			$('#login-form').submit(function (e) {
+				e.preventDefault();
+
+				var email = $("#login-email").val();
+
+				$.ajax({
+					url: 'user_login.php',
+					type: 'POST',
+					data: email,
+					success: function (response) {
+						console.log(response);
+						if (response === 'success') {
+							window.location.href = 'user-dashboard.php';
+						} else {
+							alert('Invalid username or password');
+						}
+					}
+				});
 			});
    	});
 
