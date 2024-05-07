@@ -24,7 +24,7 @@ if (isset($_POST['login'])) {
         $row = $result->fetch_assoc();
         $_SESSION['login'] = $row['username']; // Store username in session
         $_SESSION['adminid'] = $row['id'];
-        $extra = "../admin/dashboard.php";
+        $extra = "../lawyer/dashboard.php";
         echo "<script>window.location.href='" . $extra . "'</script>";
         exit();
     } else {
@@ -44,7 +44,7 @@ if (isset($_POST['login'])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>Admin Login</title>
+	<title>Lawyer Login</title>
 	<link href="../admin/assets/css/style.css" rel="stylesheet" />
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
 
@@ -60,7 +60,7 @@ if (isset($_POST['login'])) {
 							<div class="card shadow-lg border-0 rounded-lg mt-5">
 
 								<div class="card-header">
-									<h3 class="text-center font-weight-light my-4">Admin Login</h3>
+									<h3 class="text-center font-weight-light my-4">Lawyer Login</h3>
 								</div>
 								<div class="card-body">
 
@@ -82,7 +82,7 @@ if (isset($_POST['login'])) {
 
 
 										<div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-											<a class="small" href="password-recovery.php">Forgot Password?</a>
+											<a class="small" href="../lawyer/lawyer-register.php">Register</a>
 											<button class="btn btn-primary" name="login" type="submit">Login</button>
 										</div>
 									</form>

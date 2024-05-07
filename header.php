@@ -50,7 +50,8 @@ mysqli_close($conn);
 				<a href="" class="nav-item nav-link">Service</a>
 				<a href="" class="nav-item nav-link">Contact</a>
 			</div>
-			<a href="#"  class="lawyer btn btn-primary py-2 px-4">Book A Lawyer</a>
+			<a href="./lawyer/index.php"  class="btn btn-primary py-2 px-4">Register as a Lawyer</a>
+			<a href="#"  class="lawyer btn btn-primary py-2 px-4 m-1">Book A Lawyer</a>
 		</div>
 	</nav>
 

@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `lawyers` (
     `lawyer_id` INT AUTO_INCREMENT PRIMARY KEY,
     `name` VARCHAR(255),
     `email` VARCHAR(255),
+    `password` VARCHAR(255) DEFAULT NULL,
     `contact_number` VARCHAR(20),
     `location` VARCHAR(100),
     `specialization` VARCHAR(255),
