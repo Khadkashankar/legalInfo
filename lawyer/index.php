@@ -13,7 +13,7 @@ if (isset($_POST['login'])) {
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
         $_SESSION['login'] = $row['username'];
-        $_SESSION['adminid'] = $row['id'];
+        $_SESSION['id'] = $row['id'];
         $extra = "../lawyer/lawyer-dashboard.php";
         echo "<script>window.location.href='" . $extra . "'</script>";
         exit();
