@@ -20,10 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($query);
 
     if ($result) {
-        // Registration successful, print success message and redirect
         echo "<script>alert('Registration successful!'); window.location.href = 'index.php';</script>";
     } else {
-        // Registration failed, print error message
         echo "<script>alert('Registration failed!');</script>";
     }
 }

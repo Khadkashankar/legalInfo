@@ -27,7 +27,7 @@
 								</div>
 								<div class="card-body">
 
-									<form method="post" action="add_lawyers.php" enctype="multipart/form-data">
+									<form method="post" action="add-lawyers.php" enctype="multipart/form-data">
 
 									<div class="form-floating mb-3">
 											<input class="form-control" name="name" id="name" type="text" placeholder="Name" required />

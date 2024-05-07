@@ -3,28 +3,18 @@ session_start();
 include('../includes/connection.php');
 
 if (isset($_POST['login'])) {
-    $username_email = $_POST['username_email'];
-    $password = ($_POST['password']);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
-	 // Check if the entered credential is a valid email address
-	 if (filter_var($username_email, FILTER_VALIDATE_EMAIL)) {
-        $email = $username_email;
-        $username = '';
-    } else {
-        $username = $username_email;
-        $email = '';
-    }
 
-    $password = mysqli_real_escape_string($conn, $password);
-
-    $sql = "SELECT * FROM admin WHERE (username='$username' OR email='$email') AND password='$password'";
+    $sql = "SELECT * FROM lawyers WHERE  email='$email' AND password='$password'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $_SESSION['login'] = $row['username']; // Store username in session
+        $_SESSION['login'] = $row['username'];
         $_SESSION['adminid'] = $row['id'];
-        $extra = "../lawyer/dashboard.php";
+        $extra = "../lawyer/lawyer-dashboard.php";
         echo "<script>window.location.href='" . $extra . "'</script>";
         exit();
     } else {
@@ -67,8 +57,8 @@ if (isset($_POST['login'])) {
 									<form method="post">
 
 										<div class="form-floating mb-3">
-											<input class="form-control" name="username_email" type="text" placeholder="username or email" required />
-											<label for="inputEmail">Username or Email</label>
+											<input class="form-control" name="email" type="text" placeholder="email" required />
+											<label for="inputEmail">Email</label>
 										</div>
 
 
