@@ -9,11 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST['location'];
     $specialization = $_POST['specialization'];
     $description = $_POST['description'];
-    $barAssociation = $_POST['barAssociation'];
-    $experience = $_POST['experience'];
+    $barAssociation = $_POST['barAssociationNumber'];
+    $experience = $_POST['experienceYear'];
 
     $images = $_FILES["image"]["name"];
-    move_uploaded_file($_FILES["image"]["tmp_name"], "lawyerimages/" . $_FILES["image"]["name"]);
+    move_uploaded_file($_FILES["image"]["tmp_name"], "../lawyerimages/" . $_FILES["image"]["name"]);
 
     $query = "INSERT INTO lawyers (name, email, password, contact_number, location, specialization, description, profile_picture, bar_association_number, experience_years)
               VALUES ('$name', '$email', '$password', '$contact', '$location', '$specialization', '$description', '$images', '$barAssociation', '$experience')";
