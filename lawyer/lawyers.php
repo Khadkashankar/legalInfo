@@ -79,8 +79,3 @@ $result = $conn->query($query);
 </body>
 
 </html>
-
-
-<?php
-mysqli_close($conn);
-?>

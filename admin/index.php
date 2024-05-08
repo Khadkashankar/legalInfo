@@ -24,8 +24,10 @@ if (isset($_POST['login'])) {
         $row = $result->fetch_assoc();
         $_SESSION['login'] = $row['username']; // Store username in session
         $_SESSION['adminid'] = $row['id'];
+
         $extra = "../admin/dashboard.php";
         echo "<script>window.location.href='" . $extra . "'</script>";
+
         exit();
     } else {
         echo "<script>alert('Invalid username or password');</script>";

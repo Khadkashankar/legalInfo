@@ -44,9 +44,9 @@ $result = $conn->query($query);
 					<i class="fas fa-table me-1"></i>
 					Dashboard / Lawyers
 				</div>
-				<div class="d-flex justify-content-end m-3">
+				<!-- <div class="d-flex justify-content-end m-3">
                         <button type="button" class="btn btn-primary" onclick="showAddForm()">+Add Lawyer</button>
-                    </div>
+                    </div> -->
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
 						<thead>
@@ -77,13 +77,13 @@ $result = $conn->query($query);
 									echo "<td>" . $row["location"] . "</td>";
 									echo "<td>" . $row["specialization"] . "</td>";
 									echo "<td>" . $row["description"] . "</td>";
-									echo "<td><img src='./lawyerimages/" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
+									echo "<td><img src='../lawyerimages/" . $row["profile_picture"] . "' alt='Profile Picture' style='width: 100px; height: auto;'></td>";
 									echo "<td>" . $row["bar_association_number"] . "</td>";
 									echo "<td>" . $row["experience_years"] . "</td>";
 									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editModal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'>
-												<i class='fas fa-edit'></i>
-												</a>";
+									// echo "<a href='#' data-toggle='modal' data-target='#editModal' data-id='" . $row['lawyer_id'] . "' data-name='" . $row['name'] . "' data-email='" . $row['email'] . "' data-contact='" . $row['contact_number'] . "' data-location='" . $row['location'] . "' data-specialization='" . $row['specialization'] . "' data-description='" . $row['description'] . "' data-profile-picture='" . $row['profile_picture'] . "' data-bar-association='" . $row['bar_association_number'] . "' data-experience='" . $row['experience_years'] . "'>
+									// 			<i class='fas fa-edit'></i>
+									// 			</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
 									echo "<a onclick='confirmDelete(" . $row['lawyer_id'] . ")'><i class='fas fa-trash text-danger'></i></a>";
 									echo "</td>";
@@ -105,7 +105,7 @@ $result = $conn->query($query);
 	</div>
 
 	<!-- Edit Modal -->
-	<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+	<!-- <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -150,7 +150,7 @@ $result = $conn->query($query);
 						<div class="form-group">
 							<label for="editProfilePicture">Profile Picture</label>
 							<input type="file" class="form-control" id="editProfilePicture" name="profile_picture" onchange="previewImage(this)">
-							<img id="currentProfilePicture" src="./lawyerimages/<?php echo $row['profile_picture']; ?>" alt="Current Profile Picture" style="max-width: 100px; max-height: 100px;">
+							<img id="currentProfilePicture" src="../lawyerimages/<?php echo $row['profile_picture']; ?>" alt="Current Profile Picture" style="max-width: 100px; max-height: 100px;">
 							<img id="editProfilePicturePreview" src="#" alt="New Profile Picture Preview" style="max-width: 100px; max-height: 100px; display: none;">
 							<div id="invalid-editProfilePicture" style="color:red"></div><br>
 						</div>
@@ -172,10 +172,10 @@ $result = $conn->query($query);
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- Add Modal -->
-	<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+	<!-- <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -242,7 +242,7 @@ $result = $conn->query($query);
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 
 
 

@@ -5,6 +5,7 @@ if (! isset($_SESSION['login'])) {
     header("Location: ../admin/index.php");
     exit();
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

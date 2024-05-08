@@ -43,11 +43,13 @@ CREATE TABLE IF NOT EXISTS `appointments` (
     `lawyer_id` INT,
     `appointment_date` DATE,
     `appointment_time` TIME,
-	`additional_information` TEXT,
+    `additional_information` TEXT,
     `status` ENUM('pending', 'confirmed', 'canceled') DEFAULT 'pending',
-    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`),
-    FOREIGN KEY (`lawyer_id`) REFERENCES `lawyers`(`lawyer_id`)
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (`user_id`) REFERENCES `users`(`user_id`) ON DELETE CASCADE,
+    FOREIGN KEY (`lawyer_id`) REFERENCES `lawyers`(`lawyer_id`) ON DELETE CASCADE
 );
+
 
 -- Create articles table
 CREATE TABLE IF NOT EXISTS `articles` (

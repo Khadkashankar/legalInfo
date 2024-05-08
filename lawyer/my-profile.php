@@ -1,3 +1,19 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION['login'])) {
+        header("Location: index.php");
+        exit();
+    }
+
+    $user_id = $_SESSION['id'];
+
+    include('../includes/connection.php');
+
+    $query = "SELECT * FROM lawyers WHERE lawyer_id = $user_id";
+    $result = $conn->query($query);
+    while ($row = $result->fetch_assoc()) {
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 	 <head>
@@ -10,18 +26,7 @@
 		<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 		<link href="../admin/assets/css/dash-style.css" rel="stylesheet" />
 		<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-		<style>
-        .lawyer-details {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
 
-        .lawyer-details h4 {
-            margin-top: 0;
-        }
-    </style>
 	 </head>
 	<body class="sb-nav-fixed">
 			<!-- header -->
@@ -35,27 +40,40 @@
                     <ol class="breadcrumb mt-4">
                         <li class="breadcrumb-item active">My Profile</li>
                     </ol>
-					<?php
-                    // Include database connection
-                    include('../includes/connection.php');
-
-                    // Fetch data from the database
-                    $query = "SELECT * FROM lawyers";
-                    $result = $conn->query($query);
-
-                    // Display data
-                    while ($row = $result->fetch_assoc()) {
-                        echo '<div class="lawyer-details">';
-                        echo '<h4>' . $row['name'] . '</h4>';
-                        echo '<p><strong>Email:</strong> ' . $row['email'] . '</p>';
-                        echo '<p><strong>Phone:</strong> ' . $row['phone'] . '</p>';
-                        // Add more fields as needed
-                        echo '</div>';
-                    }
-
-                    // Close database connection
-                    mysqli_close($conn);
-                    ?>
+					<div class="container mt-5">
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+						<div class="card">
+							<div class="card-header bg-primary text-white">
+							My Details
+							</div>
+							<div class="card-body">
+									<div class="row">
+									<div class="col-md-3">
+            <img src="../lawyerimages/<?php echo $row['profile_picture']; ?>" alt="Lawyer Image" class="img-fluid rounded">
+        </div>
+        <div class="col-md-9">
+            <p><strong>Name:</strong> <?php echo $row['name']; ?></p>
+            <p><strong>Email:</strong> <?php echo $row['email']; ?></p>
+            <p><strong>Contact Number:</strong> <?php echo $row['contact_number']; ?></p>
+            <p><strong>Location:</strong> <?php echo $row['location']; ?></p>
+            <p><strong>Specialization:</strong> <?php echo $row['specialization']; ?></p>
+            <p><strong>Description:</strong> <?php echo $row['description']; ?></p>
+            <p><strong>Bar Association Number:</strong> <?php echo $row['bar_association_number']; ?></p>
+            <p><strong>Experience Years:</strong> <?php echo $row['experience_years']; ?></p>
+        </div>
+									</div>
+									<div class="text-center mt-3">
+										<button class="btn btn-primary">Edit Details</button>
+									</div>
+									<?php
+										}
+									?>
+							</div>
+						</div>
+						</div>
+					</div>
+					</div>
                 </div>
             </main>
 			<!-- footer -->
