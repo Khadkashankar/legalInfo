@@ -1,21 +1,3 @@
-<?php
-
-session_start();
-
-if (!isset($_SESSION['login'])) {
-    header("Location: index.php");
-    exit();
-}
-
-$user_id = $_SESSION['id'];
-
-include('../includes/connection.php');
-
-$query = "SELECT * FROM lawyers WHERE lawyer_id = $user_id";
-$result = $conn->query($query);
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
