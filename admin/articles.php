@@ -246,7 +246,7 @@ $result = $conn->query($query);
 							.create(document.querySelector('#editContentEditor'))
 							.then(editor => {
 								modal.data('contentEditor', editor);
-								editor.setData(content); // Populate content
+								editor.setData(content);
 								editor.model.document.on('change', () => {
 									$('#editContent').val(editor.getData());
 								});
@@ -257,7 +257,7 @@ $result = $conn->query($query);
 								console.error(error);
 							});
 					} else {
-						modal.data('contentEditor').setData(content); // Populate content
+						modal.data('contentEditor').setData(content);
 					}
 				}
 
@@ -267,7 +267,7 @@ $result = $conn->query($query);
 						.create(document.querySelector('#editDescriptionEditor'))
 						.then(editor => {
 							modal.data('descriptionEditor', editor);
-							editor.setData(description); // Populate description
+							editor.setData(description);
 							editor.model.document.on('change', () => {
 								$('#editDescription').val(editor.getData());
 							});
@@ -277,7 +277,7 @@ $result = $conn->query($query);
 							console.error(error);
 						});
 				} else {
-					modal.data('descriptionEditor').setData(description); // Populate description
+					modal.data('descriptionEditor').setData(description);
 				}
 			}
 
@@ -387,6 +387,8 @@ $result = $conn->query($query);
 					var image = $("#addImage")[0].files[0];
 					var status = $('#addStatus').val();
 
+						console.log(description);
+						console.log(content);
 					var isValid = true;
 
 					if (!title) {

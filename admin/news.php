@@ -246,7 +246,7 @@ $result = $conn->query($query);
 							.create(document.querySelector('#editNewsContentEditor'))
 							.then(editor => {
 								modal.data('contentEditor', editor);
-								editor.setData(content); // Populate content
+								editor.setData(content); 
 								editor.model.document.on('change', () => {
 									$('#editNewsContent').val(editor.getData());
 								});
@@ -256,7 +256,7 @@ $result = $conn->query($query);
 								console.error(error);
 							});
 					} else {
-						modal.data('contentEditor').setData(content); // Populate content
+						modal.data('contentEditor').setData(content);
 					}
 				}
 
@@ -266,7 +266,7 @@ $result = $conn->query($query);
 						.create(document.querySelector('#editNewsDescriptionEditor'))
 						.then(editor => {
 							modal.data('descriptionEditor', editor);
-							editor.setData(description); // Populate description
+							editor.setData(description);
 							editor.model.document.on('change', () => {
 								$('#editNewsDescription').val(editor.getData());
 							});
@@ -277,7 +277,7 @@ $result = $conn->query($query);
 							console.error(error);
 						});
 				} else {
-					modal.data('descriptionEditor').setData(description); // Populate description
+					modal.data('descriptionEditor').setData(description);
 				}
 			}
 });

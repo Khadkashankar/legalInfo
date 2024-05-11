@@ -8,7 +8,6 @@ if (!isset($_SESSION['login'] ) ) {
 }
 include('../includes/connection.php');
 
-// Fetch user records from the database
 $query = "SELECT * FROM appointments";
 $result = $conn->query($query);
 
@@ -42,7 +41,7 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Dashboard / Users
+					Dashboard / Appointments
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
@@ -68,19 +67,17 @@ $result = $conn->query($query);
 									echo "<td>" . $row['appointment_date'] . "</td>";
 									echo "<td>" . $row['status'] . "</td>";
 									echo "<td>";
-									// Confirm Button
 									if ($row['status'] != 'confirmed') {
                                         echo "<button class='btn btn-sm btn-success' onclick='confirmAppointment(" . $row['appointment_id'] . ")'>Confirm</button>";
                                     }
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
 
-									// Cancel Button
 									echo "<button class='btn btn-sm btn-danger' onclick='cancelAppointment(" . $row['appointment_id'] . ")'>Delete</button>";
 									echo "</td>";
 									echo "</tr>";
 								}
 							} else {
-									echo "<tr><td colspan='11'>No users found</td></tr>";
+									echo "<tr><td colspan='11'>No appointments found</td></tr>";
 								}
 							?>
 						</tbody>
@@ -120,7 +117,6 @@ $result = $conn->query($query);
 							location.reload();
 						},
 						error: function(xhr, status, error) {
-							// Handle error response
 							console.error(xhr.responseText);
 						}
 					});
@@ -140,13 +136,12 @@ $result = $conn->query($query);
 						if (result.isConfirmed) {
 							$.ajax({
 								type: 'POST',
-								url: 'cancel-appointment.php', // Your PHP script to handle cancellation
+								url: 'cancel-appointment.php',
 								data: { appointment_id: appointmentId },
 								success: function(response) {
 									location.reload();
 								},
 								error: function(xhr, status, error) {
-									// Handle error response
 									console.error(xhr.responseText);
 								}
 							});

@@ -1,5 +1,5 @@
 <?php
-session_start();
+// session_start();
 include('./includes/connection.php');
 
 if (isset($_POST['login'])) {
@@ -16,7 +16,7 @@ if (isset($_POST['login'])) {
         // Fetch user data
         $user = $result->fetch_assoc();
         $_SESSION['id'] = $user['user_id'];
-        $_SESSION['name'] = $user['name']; 
+        $_SESSION['name'] = $user['name'];
 
         $extra = "user-dashboard.php";
         header("Location: $extra");

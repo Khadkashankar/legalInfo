@@ -8,7 +8,6 @@ if (!isset($_SESSION['login'])) {
 }
 include('../includes/connection.php');
 
-// Fetch user records from the database
 $query = "SELECT * FROM users";
 $result = $conn->query($query);
 

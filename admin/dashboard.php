@@ -5,6 +5,48 @@ if (! isset($_SESSION['login'])) {
     header("Location: ../admin/index.php");
     exit();
 }
+include('../includes/connection.php');
+
+function countTotalUsers($conn) {
+    $sql = "SELECT COUNT(*) AS totalUsers FROM users";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalUsers'];
+}
+
+function countTotalAppointments($conn) {
+    $sql = "SELECT COUNT(*) AS totalAppointments FROM appointments";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalAppointments'];
+}
+
+function countTotalArticles($conn) {
+    $sql = "SELECT COUNT(*) AS totalArticles FROM articles";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalArticles'];
+}
+
+function countTotalNews($conn) {
+    $sql = "SELECT COUNT(*) AS totalNews FROM news";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalNews'];
+}
+
+function countTotalLawyers($conn) {
+    $sql = "SELECT COUNT(*) AS totalLawyers FROM lawyers";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['totalLawyers'];
+}
+
+$totalUsers = countTotalUsers($conn);
+$totalAppointments = countTotalAppointments($conn);
+$totalArticles = countTotalArticles($conn);
+$totalNews = countTotalNews($conn);
+$totalLawyers = countTotalLawyers($conn);
 
 ?>
 <!DOCTYPE html>
@@ -32,35 +74,64 @@ if (! isset($_SESSION['login'])) {
                     <ol class="breadcrumb mt-4">
                         <li class="breadcrumb-item active">Dashboard</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Total Users</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Total Appointment</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-success text-white mb-4">
-                                <div class="card-body">Total Lawyers</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                   <div class="row">
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-primary text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Users</div>
+										<i class="fas fa-users fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalUsers; ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-warning text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Appointments</div>
+										<i class="fas fa-calendar-alt fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalAppointments; ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-success text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Lawyers</div>
+										<i class="fas fa-user-tie fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalLawyers; ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-info text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Articles</div>
+										<i class="far fa-newspaper fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalArticles; ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-secondary text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total News</div>
+										<i class="far fa-newspaper fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalNews; ?></div>
+								</div>
+							</div>
+						</div>
+					</div>
+
                 </div>
             </main>
 			<!-- footer -->

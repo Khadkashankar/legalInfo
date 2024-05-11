@@ -550,7 +550,7 @@ $result = $conn->query($query);
 
 			reader.onload = function(e) {
 				$('#editProfilePicturePreview').attr('src', e.target.result).show();
-				$('#currentProfilePicture').hide(); // Hide the current profile picture
+				$('#currentProfilePicture').hide(); 
 			}
 
 			reader.readAsDataURL(input.files[0]);

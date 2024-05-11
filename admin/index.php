@@ -22,7 +22,7 @@ if (isset($_POST['login'])) {
 
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();
-        $_SESSION['login'] = $row['username']; // Store username in session
+        $_SESSION['login'] = $row['username'];
         $_SESSION['adminid'] = $row['id'];
 
         $extra = "../admin/dashboard.php";
