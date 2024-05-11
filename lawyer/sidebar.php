@@ -7,7 +7,7 @@
                             <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                             Dashboard
                         </a>
-                        <a class="nav-link" href="lawyers.php">
+                        <a class="nav-link" href="user-details.php">
                             <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                             Users
                         </a>

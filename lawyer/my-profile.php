@@ -6,11 +6,11 @@
         exit();
     }
 
-    $user_id = $_SESSION['id'];
+    $id = $_SESSION['id'];
 
     include('../includes/connection.php');
 
-    $query = "SELECT * FROM lawyers WHERE lawyer_id = $user_id";
+    $query = "SELECT * FROM lawyers WHERE lawyer_id = $id";
     $result = $conn->query($query);
     while ($row = $result->fetch_assoc()) {
     ?>

@@ -12,20 +12,6 @@ if(isset($_POST['name'], $_POST['email'], $_POST['password'], $_POST['address'],
     $query = "INSERT INTO users (name, email, password, address, phone_number, gender)
     VALUES ('$name', '$email', '$password', '$address', '$phone', '$gender')";
     $result = $conn->query($query);
-
-    if($result) {
-        session_start();
-        $_SESSION['user_id'] = $conn->insert_id;
-        $_SESSION['name'] = $name;
-        // Redirect to user dashboard
-        header("Location: user-dashboard.php");
-        exit();
-    } else {
-		echo "<script>alert('Invalid username or password');</script>";
-        $extra = "index.php";
-        echo "<script>window.location.href='" . $extra . "'</script>";
-        exit();
-    }
 }
 mysqli_close($conn);
 ?>

@@ -42,7 +42,15 @@
         </div>
 
         <!-- Navbar & Hero Start -->
-		<?php include('./header.php'); ?>
+				<?php
+					if (!isset($_SESSION['name'])) {
+						// Display header content for logged-in users
+						include('header.php');
+					} else {
+						// Display header content for non-logged-in users
+						include('logged-in-header');
+					}
+                ?>
 
 		 <!-- About Start -->
 		 <div class="container-xxl py-5">
@@ -79,7 +87,7 @@
         <!-- About End -->
 
 		   <!-- Team Start -->
-		<?php include('./show_lawyers.php'); ?>
+		<?php include('./show-lawyers.php'); ?>
         <!-- Team End -->
 
         <!-- Footer Start -->

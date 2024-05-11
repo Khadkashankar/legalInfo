@@ -6,19 +6,17 @@ if (isset($_POST['login'])) {
     $username_email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Sanitize input
     $username_email = mysqli_real_escape_string($conn, $username_email);
     $password = mysqli_real_escape_string($conn, $password);
 
-    // Construct SQL query
     $query = "SELECT * FROM users WHERE email='$username_email' AND password='$password'";
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
         // Fetch user data
         $user = $result->fetch_assoc();
-        $_SESSION['user_id'] = $user['id']; // Store user ID in session
-        $_SESSION['name'] = $user['name']; // Store user's name in session
+        $_SESSION['id'] = $user['user_id'];
+        $_SESSION['name'] = $user['name']; 
 
         $extra = "user-dashboard.php";
         header("Location: $extra");

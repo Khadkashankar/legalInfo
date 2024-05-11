@@ -1,4 +1,5 @@
 <?php
+
 include('./includes/connection.php');
 
 $query = "SELECT * FROM lawyers";
@@ -28,7 +29,7 @@ $result = $conn->query($query);
 					<b>Specialization: </b><small class='text-muted'>" . $row['specialization'] . "</small> <br>
 					<small class='text-muted'>" . $row['experience_years'] . "</small><b> Years Experience</b>
                     <div class='mt-3'>
-					<a class='btn btn-sm btn-info' href='single_lawyer.php?u_id=" . $row['lawyer_id'] . "'><i class='fa fa-street-view'></i>&nbsp; View Full Profile</a>
+					<a class='btn btn-sm btn-info' href='./single-lawyer.php?id=" . $row['lawyer_id'] . "'><i class='fa fa-street-view'></i>&nbsp; View Full Profile</a>
                     </div>
                 </div>
             </div>";

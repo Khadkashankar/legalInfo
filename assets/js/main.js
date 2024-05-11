@@ -71,6 +71,7 @@
 
 
     $(document).ready(function () {
+
 		$('.lawyer').click(function(e) {
 			e.preventDefault();
             $('#registerModal').modal('show');
@@ -175,30 +176,85 @@
 				success: function (response) {
 					Swal.fire({
 						icon: 'success',
-						title: 'User Registered Successfully',
+						title: 'User Registered Successfully ! Now You can log in',
 						confirmButtonText: 'OK',
 						timer: 2000
 					}).then(() => {
-						window.location.href = 'user-dashboard.php';
+						window.location.href = window.location.href;
 					});
     			}
     		})
    		 });
-
 
 			$("#name, #email, #password, #address, #phone").on("input", function () {
 				var field = $(this).attr("id");
 				$("#invalid-" + field).text("");
 			});
 
-
 			// Clear gender error when a gender option is selected
 			$("input[name='gender']").on("change", function () {
 				$("#invalid-gender").text("");
 			});
+
+			function validateFormData(formData) {
+				if (!formData.date) {
+					alert('Please select a date.');
+					return false;
+				}
+				return true;
+			}
+
+			// Form submission
+			$('#appointmentForm').on('submit', function(e) {
+				e.preventDefault();
+
+				// Get form data
+				var formData = {
+					'lawyer_id': $('input[name=lawyer_id]').val(),
+					'user_id': $('input[name=user_id]').val(),
+					'date': $('#date').val(),
+					'description': $('#description').val()
+				};
+
+				if (!validateFormData(formData)) {
+					return false;
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: 'insert-appointment.php',
+					data: formData,
+					success: function(response) {
+						Swal.fire({
+							icon: 'success',
+							title: 'Booking Sent Successfully',
+							confirmButtonText: 'OK',
+							timer: 3000
+						}).then((result) => {
+							window.location.href = 'user-dashboard.php';
+						});
+					},
+					error: function(xhr, status, error) {
+						console.error(xhr.responseText);
+					}
+				});
+			});
+
+			// Disable past dates
+			$('#date').attr('min', new Date().toISOString().split('T')[0]);
+
+			// On change of date value, validate if it's not in the past
+			$('#date').on('change', function() {
+				var selectedDate = new Date($(this).val());
+				var today = new Date();
+				today.setHours(0, 0, 0, 0);
+
+				if (selectedDate < today) {
+					alert('Please select today\'s date or a future date.');
+					$(this).val('');
+				}
+			});
    	});
-
-
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({

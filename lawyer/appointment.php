@@ -2,14 +2,17 @@
 
 session_start();
 
-if (!isset($_SESSION['login'] ) ) {
+include('../includes/connection.php');
+
+if (!isset($_SESSION['id'] ) ) {
     header("Location: index.php");
     exit();
 }
-include('../includes/connection.php');
+
+$id = $_SESSION['id'];
 
 // Fetch user records from the database
-$query = "SELECT * FROM appointments";
+$query = "SELECT * FROM appointments WHERE lawyer_id =$id";
 $result = $conn->query($query);
 
 ?>
@@ -23,7 +26,7 @@ $result = $conn->query($query);
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 	<meta name="description" content="" />
 	<meta name="author" content="" />
-	<title>Admin Dashboard</title>
+	<title>Lawyer Dashboard</title>
 	<link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 	<link href="../admin/assets/css/dash-style.css" rel="stylesheet" />
 
@@ -50,8 +53,8 @@ $result = $conn->query($query);
 							<tr>
 								<th>S.N</th>
 								<th>User ID</th>
-								<th>Lawyer ID</th>
 								<th>Date</th>
+								<th>Description</th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
@@ -64,8 +67,8 @@ $result = $conn->query($query);
 									echo "<tr>";
 									echo "<td>" . $i++ . "</td>";
 									echo "<td>" . $row['user_id'] . "</td>";
-									echo "<td>" . $row['lawyer_id'] . "</td>";
 									echo "<td>" . $row['appointment_date'] . "</td>";
+									echo "<td>" . $row['additional_information'] . "</td>";
 									echo "<td>" . $row['status'] . "</td>";
 									echo "<td>";
 									// Confirm Button
@@ -76,6 +79,9 @@ $result = $conn->query($query);
 
 									// Cancel Button
 									echo "<button class='btn btn-sm btn-danger' onclick='cancelAppointment(" . $row['appointment_id'] . ")'>Delete</button>";
+									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
+
+									echo "<button class='btn btn-sm btn-info' onclick='viewDetails(" . $row['user_id'] .",". $row['appointment_id'] . ")'>View Details</button>";
 									echo "</td>";
 									echo "</tr>";
 								}
@@ -89,18 +95,42 @@ $result = $conn->query($query);
 			</div>
 
 			<!-- footer -->
-			<?php include('footer.php'); ?>
+			<?php include('../admin/footer.php'); ?>
 
 		</div>
 	</div>
+		<!-- User Details Modal -->
+			<div class="modal fade" id="userDetailsModal" tabindex="-1" role="dialog" aria-labelledby="userDetailsModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="userDetailsModalLabel">User and Appointment Details</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+						</div>
+						<div class="modal-body">
+							<div id="userDetails"></div>
+							<hr>
+							<div id="appointmentDetails"></div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 
 			<!-- Include Bootstrap JS -->
 			<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 			<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 			<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+			<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> -->
 			<script src="../admin/assets/js/script.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
 			<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
@@ -154,8 +184,45 @@ $result = $conn->query($query);
 					});
 				}
 
+   				 // Function to view user details
+					function viewDetails(userId, appointmentId) {
+   						 // Fetch user details
+						jQuery.ajax({
+							type: 'POST',
+							url: 'fetch-user-details.php',
+							data: { user_id: userId },
+							success: function(userResponse) {
+								// Populate modal with user details
+								$('#userDetailsModal .modal-body #userDetails').html(userResponse);
+
+								// Fetch appointment details
+								$.ajax({
+									type: 'POST',
+									url: 'fetch-appointment-details.php',
+									data: { appointment_id: appointmentId },
+									success: function(appointmentResponse) {
+										// Populate modal with appointment details
+										$('#userDetailsModal .modal-body #appointmentDetails').html(appointmentResponse);
+
+										// Show the modal
+										$('#userDetailsModal').modal('show');
+									},
+									error: function(xhr, status, error) {
+										// Handle error response for appointment details
+										console.error(xhr.responseText);
+									}
+								});
+							},
+							error: function(xhr, status, error) {
+								// Handle error response for user details
+								console.error(xhr.responseText);
+							}
+						});
+					}
+
+
+
 			</script>
-	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
 </body>
 
