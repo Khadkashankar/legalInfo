@@ -42,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `appointments` (
     `user_id` INT,
     `lawyer_id` INT,
     `appointment_date` DATE,
-    `appointment_time` TIME,
     `additional_information` TEXT,
     `status` ENUM('pending', 'confirmed', 'canceled') DEFAULT 'pending',
     `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

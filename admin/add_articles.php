@@ -2,10 +2,11 @@
 include('../includes/connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	$title = mysqli_real_escape_string($conn, $_POST['title']);
-    $content = mysqli_real_escape_string($conn, $_POST['content']);
+    $title = $_POST['title'];
+	$content = mysqli_real_escape_string($conn, $_POST['content']);
     $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $status = mysqli_real_escape_string($conn, $_POST['status']);
+    $status = $_POST['status'];
+
 
 
 

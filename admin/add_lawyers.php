@@ -6,8 +6,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $contact = $_POST['contact'];
     $location = $_POST['location'];
-    $specialization = $_POST['specialization'];
-    $description = $_POST['description'];
+    $specialization = mysqli_real_escape_string($conn, $_POST['specialization']);
+    $description = mysqli_real_escape_string($conn, $_POST['description']);
     $barAssociation = $_POST['bar_association_number'];
     $experience = $_POST['experience_years'];
 

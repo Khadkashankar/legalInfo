@@ -72,8 +72,8 @@ if (isset($_POST['login'])) {
 
 
 										<div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-											<a class="small" href="../lawyer/lawyer-register.php">Register</a>
 											<button class="btn btn-primary" name="login" type="submit">Login</button>
+											<a class="btn btn-primary" href="../lawyer/lawyer-register.php">Register</a>
 										</div>
 									</form>
 								</div>

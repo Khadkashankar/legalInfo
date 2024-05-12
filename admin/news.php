@@ -126,13 +126,13 @@ $result = $conn->query($query);
 									<input type="hidden" id="editNewsDescription" name="description">
 									<div id="invalid-editNewsDescription" style="color:red"></div><br>
                     			</div>
-						<div class="form-group">
-							<label for="editNewsImage">Images</label>
-							<input type="file" class="form-control" id="editNewsImage" name="image" onchange="previewImage(this)">
-							<img id="currentNewsImage" src="./newsimages/<?php echo $row['image']; ?>" alt="Current Image" style="max-width: 100px; max-height: 100px;">
-							<img id="editNewsImagePreview" src="#" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
-							<div id="invalid-editNewsImage" style="color:red"></div><br>
-						</div>
+								<div class="form-group">
+									<label for="editNewsImage">Image</label>
+									<input type="file" class="form-control" id="editNewsImage" name="image" onchange="previewImage(this)">
+									<img id="currentNewsImage" src="" alt="Current Image" style="max-width: 100px; max-height: 100px;">
+									<img id="editNewsImagePreview" src="" alt="New Image" style="max-width: 100px; max-height: 100px; display: none;">
+									<div id="invalid-editNewsImage" style="color:red"></div><br>
+								</div>
 						<div class="form-group">
                         <label for="editNewsStatus">Status</label>
                         <select class="form-control" id="editNewsStatus" name="status">
@@ -226,19 +226,34 @@ $result = $conn->query($query);
 	<script>
 		// Function to populate form fields with lawyer information when edit icon is clicked
 		$('#editNewsModal').on('show.bs.modal', function(event) {
-    var button = $(event.relatedTarget);
-    var id = button.data('id');
-    var title = button.data('title');
-    var content = button.data('content');
-    var description = button.data('description');
-    var image = button.data('image');
-    var status = button.data('status');
+						var button = $(event.relatedTarget);
+						var id = button.data('id');
+						var title = button.data('title');
+						var content = button.data('content');
+						var description = button.data('description');
+						var image = button.data('image');
+						console.log(image);
+						var status = button.data('status');
 
-    var modal = $(this);
-    modal.find('.modal-body #editNewsId').val(id);
-    modal.find('.modal-body #editNewsTitle').val(title);
-    modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
-    modal.find('.modal-body #editNewsStatus').val(status);
+						var modal = $(this);
+						modal.find('.modal-body #editNewsId').val(id);
+						modal.find('.modal-body #editNewsTitle').val(title);
+						modal.find('.modal-body #currentNewsImage').attr('src', './newsimages/' + image);
+						modal.find('.modal-body #editNewsStatus').val(status);
+
+						// Create a File object from the Blob
+							fetch('./newsimages/' + image)
+								.then(response => response.blob())
+								.then(blob => {
+									const file = new File([blob], image);
+									const fileList = new DataTransfer();
+									fileList.items.add(file);
+									const fileInput = modal.find('.modal-body #editNewsImage')[0];
+									fileInput.files = fileList.files;
+								})
+								.catch(error => {
+									console.error('Error fetching image:', error);
+								});
 
 				if (content) {
 					if (!modal.data('contentEditor')) {
@@ -246,7 +261,7 @@ $result = $conn->query($query);
 							.create(document.querySelector('#editNewsContentEditor'))
 							.then(editor => {
 								modal.data('contentEditor', editor);
-								editor.setData(content); 
+								editor.setData(content);
 								editor.model.document.on('change', () => {
 									$('#editNewsContent').val(editor.getData());
 								});
@@ -475,6 +490,7 @@ $result = $conn->query($query);
     	});
 
 	</script>
+
 </body>
 
 </html>

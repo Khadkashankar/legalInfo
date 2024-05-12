@@ -240,6 +240,21 @@ $result = $conn->query($query);
 			modal.find('.modal-body #currentImage').attr('src', './articlesimages/' + image);
 			modal.find('.modal-body #editStatus').val(status);
 
+
+							// Create a File object from the Blob
+							fetch('./articlesimages/' + image)
+								.then(response => response.blob())
+								.then(blob => {
+									const file = new File([blob], image);
+									const fileList = new DataTransfer();
+									fileList.items.add(file);
+									const fileInput = modal.find('.modal-body #editImage')[0];
+									fileInput.files = fileList.files;
+								})
+								.catch(error => {
+									console.error('Error fetching image:', error);
+								});
+
 			if (content) {
 					if (!modal.data('contentEditor')) {
 						ClassicEditor
