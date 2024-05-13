@@ -246,7 +246,7 @@ $result = $conn->query($query);
 
 
 
-	<!-- Include Bootstrap JS -->
+					<!-- Include Bootstrap JS -->
 					<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 					<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 					<script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
@@ -550,7 +550,7 @@ $result = $conn->query($query);
 
 			reader.onload = function(e) {
 				$('#editProfilePicturePreview').attr('src', e.target.result).show();
-				$('#currentProfilePicture').hide(); 
+				$('#currentProfilePicture').hide();
 			}
 
 			reader.readAsDataURL(input.files[0]);

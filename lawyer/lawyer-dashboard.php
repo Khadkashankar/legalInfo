@@ -1,3 +1,34 @@
+<?php
+session_start();
+
+if (! isset($_SESSION['id'])) {
+    header("Location: ../lawyer/index.php");
+    exit();
+}
+include('../includes/connection.php');
+
+$lawyer_id = $_SESSION['id'];
+
+function countTotalUsers($conn, $lawyer_id) {
+    $sql = "SELECT COUNT(DISTINCT user_id) AS total_users FROM appointments WHERE lawyer_id = $lawyer_id;";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total_users'];
+}
+
+function countTotalAppointments($conn, $lawyer_id) {
+    $sql = "SELECT COUNT(*) AS total_appointments FROM appointments WHERE lawyer_id = $lawyer_id";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total_appointments'];
+}
+
+$totalUsers = countTotalUsers($conn, $lawyer_id);
+$totalAppointments = countTotalAppointments($conn, $lawyer_id);
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 	 <head>
@@ -23,26 +54,30 @@
                     <ol class="breadcrumb mt-4">
                         <li class="breadcrumb-item active">Lawyer Dashboard</li>
                     </ol>
-                    <div class="row">
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-primary text-white mb-4">
-                                <div class="card-body">Total Users</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-md-6">
-                            <div class="card bg-warning text-white mb-4">
-                                <div class="card-body">Total Appointment</div>
-                                <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <a class="small text-white stretched-link" href="#">View Details</a>
-                                    <div class="small text-white"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+					<div class="row">
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-primary text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Users</div>
+										<i class="fas fa-users fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalUsers; ?></div>
+								</div>
+							</div>
+						</div>
+						<div class="col-xl-3 col-md-6">
+							<div class="card bg-warning text-white mb-4">
+								<div class="card-body">
+									<div class="d-flex justify-content-between align-items-center">
+										<div class="h6">Total Appointments</div>
+										<i class="fas fa-calendar fa-2x"></i>
+									</div>
+									<div class="h3 mt-3"><?php echo $totalAppointments; ?></div>
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
             </main>
 			<!-- footer -->

@@ -17,7 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $query = "INSERT INTO lawyers (name, email, password, contact_number, location, specialization, description, profile_picture, bar_association_number, experience_years)
               VALUES ('$name', '$email', '$password', '$contact', '$location', '$specialization', '$description', '$images', '$barAssociation', '$experience')";
-    $result = $conn->query($query);
+
+   $result = $conn->query($query);
 
     if ($result) {
         echo "<script>alert('Registration successful!'); window.location.href = 'index.php';</script>";

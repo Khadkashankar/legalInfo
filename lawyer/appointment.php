@@ -45,7 +45,7 @@ $result = $conn->query($query);
 			<div class="card mb-4">
 				<div class="card-header">
 					<i class="fas fa-table me-1"></i>
-					Dashboard / Users
+					Dashboard / Appointments
 				</div>
 				<div class="card-body">
 					<table id="datatablesSimple" class="table">
@@ -86,7 +86,7 @@ $result = $conn->query($query);
 									echo "</tr>";
 								}
 							} else {
-									echo "<tr><td colspan='11'>No users found</td></tr>";
+									echo "<tr><td colspan='11'>No appointments found</td></tr>";
 								}
 							?>
 						</tbody>
