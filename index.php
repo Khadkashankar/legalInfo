@@ -44,11 +44,9 @@
         <!-- Navbar & Hero Start -->
 				<?php
 					if (!isset($_SESSION['name'])) {
-						// Display header content for logged-in users
 						include('header.php');
 					} else {
-						// Display header content for non-logged-in users
-						include('logged-in-header');
+						include('logged-in-header.php');
 					}
                 ?>
 

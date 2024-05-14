@@ -4,17 +4,13 @@
 				<div class="row">
 					<?php
 						// session_start();
-				include('./includes/connection.php'); // Update to your connection file
-							// Check if id is set and is a number
+				include('./includes/connection.php');
 							if(isset($_GET['id']) && is_numeric($_GET['id'])) {
 								$lawyer_id = $_GET['id'];
-								// Prepare and execute the SQL query
 								$query = "SELECT * FROM lawyers WHERE lawyer_id = $lawyer_id";
 								$result = $conn->query($query);
 
-								// Check if query was successful
 								if ($result && $result->num_rows > 0) {
-									// Fetch data and display profile
 									while($row = $result->fetch_assoc()) {
 										?>
 						<div class="col-md-3">

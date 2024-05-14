@@ -1,5 +1,7 @@
 
-
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,15 +46,12 @@
         </div>
 
 			<!-- Navbar & Hero Start -->
-			<?php
-			session_start();
-                if (!isset($_SESSION['name'])) {
-                    // Display header content for logged-in users
-                    include('header.php');
-                } else {
-                    // Display header content for non-logged-in users
-                    include('logged-in-header.php');
-                }
+				<?php
+					if (isset($_SESSION['name'])) {
+						 include('logged-in-header.php');
+					} else {
+						 include('header.php');
+					}
                 ?>
 
 

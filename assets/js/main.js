@@ -74,13 +74,13 @@
 
 		$('.lawyer').click(function(e) {
 			e.preventDefault();
-            $('#registerModal').modal('show');
+            $('#loginModal').modal('show');
         });
 
 		$('#login-link').click(function(e) {
 			e.preventDefault();
-            $('#loginModal').modal('show');
-            $('#registerModal').modal('hide');
+            $('#registerModal').modal('show');
+            $('#loginModal').modal('hide');
         });
 
 		$('#register-form').submit(function(e) {
@@ -254,6 +254,8 @@
 					$(this).val('');
 				}
 			});
+
+			
    	});
 
     // Testimonials carousel

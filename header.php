@@ -1,8 +1,9 @@
 <?php
-// session_start();
 include('./includes/connection.php');
 
 if (isset($_POST['login'])) {
+	session_start();
+
     $username_email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -31,7 +32,14 @@ if (isset($_POST['login'])) {
 
 mysqli_close($conn);
 ?>
-
+<head>
+    <style>
+        .modal-dialog {
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+    </style>
+</head>
 
 <div class="position-relative p-0">
 	<nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4 px-lg-5 py-3 py-lg-0">
@@ -43,7 +51,7 @@ mysqli_close($conn);
 		</button>
 		<div class="collapse navbar-collapse" id="navbarCollapse">
 			<div class="navbar-nav ms-auto py-0 pe-4">
-				<a href="" class="nav-item nav-link active">Home</a>
+				<a href="./" class="nav-item nav-link active">Home</a>
 				<a href="" class="nav-item nav-link">About</a>
 				<a href="" class="nav-item nav-link">Service</a>
 				<a href="" class="nav-item nav-link">Contact</a>
@@ -61,7 +69,7 @@ mysqli_close($conn);
 					<a href="#"  class="lawyer btn btn-primary py-sm-3 px-sm-5 me-3 animated slideInLeft">Book A Lawyer</a>
 				</div>
 				<div class="col-lg-6 text-center text-lg-end overflow-hidden">
-					<img class="img-fluid" src="./assets/img/justice.png" alt="">
+					<img class="img-fluid" src="./assets/img/justice.png" alt="" height="150px" width="150px">
 				</div>
 			</div>
 		</div>
@@ -88,6 +96,7 @@ mysqli_close($conn);
                     </div>
                     <button type="submit" class="btn btn-primary" name="login">Login</button>
                 </form>
+				<p class="mt-3">Not have Account? <a href="" id="login-link">Register</a></p>
             </div>
         </div>
     </div>
