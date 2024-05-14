@@ -567,7 +567,7 @@ $result = $conn->query($query);
 		  $("#addName, #addEmail, #addContact, #addLocation, #addSpecialization, #addDescription, #addProfilePicture, #addBarAssociation, #addExperience").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
-    	});
+    		});
 
 	</script>
 </body>

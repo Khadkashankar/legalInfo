@@ -12,6 +12,7 @@ $result = $conn->query($query);
         <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
             <h5 class="section-title ff-secondary text-center text-primary fw-normal">Book your lawyer now</h5>
             <h1 class="mb-5">Lawyers</h1>
+
         </div>
 		<div class="row g-4">
     <?php

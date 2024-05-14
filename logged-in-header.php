@@ -15,7 +15,7 @@ if (!isset($_SESSION['name'])) {
 							</button>
 							<div class="collapse navbar-collapse" id="navbarCollapse">
 								<div class="navbar-nav ms-auto py-0 pe-4">
-									<a href="" class="nav-item nav-link">My appointment</a>
+									<a href="my-appointment.php"  class="nav-item nav-link userAppointment">My appointment</a>
 								</div>
 								<div class="d-flex align-items-center">
 							<div class="nav-item dropdown">
@@ -40,12 +40,7 @@ if (!isset($_SESSION['name'])) {
 							<div class="container my-5 py-5">
 								<div class="row align-items-center g-5">
 									<div class="col-lg-6 text-center text-lg-start">
-									<form action="search.php" method="GET" class="mb-4">
-    <div class="input-group">
-        <input type="text" class="form-control" placeholder="Search by name or location" name="query">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
-</form>
+
 									</div>
 									<div class="col-lg-6 text-center text-lg-end overflow-hidden">
 										<img class="img-fluid" src="./assets/img/justice.png" height="150px" width="150px">

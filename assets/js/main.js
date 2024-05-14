@@ -255,7 +255,6 @@
 				}
 			});
 
-			
    	});
 
     // Testimonials carousel
