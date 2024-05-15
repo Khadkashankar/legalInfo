@@ -88,6 +88,89 @@
 		<?php include('./show-lawyers.php'); ?>
         <!-- Team End -->
 
+
+		<!--news-area start-->
+		  	<div class="blog-area pd-top-115 pd-bottom-90">
+				<div class="container p-sm-0">
+					<div class="row justify-content-center">
+						<div class="col-lg-6">
+							<div class="section-title text-center">
+								<h2 class="title">LATEST NEWS</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+							<?php
+								$query = "SELECT * FROM news WHERE status = 'published'";
+								$result = $conn->query($query);
+
+								if ($result->num_rows > 0) {
+									while ($news_row = $result->fetch_assoc()) {
+							?>
+							<div class="col-lg-4 col-md-6">
+								<div class="single-blog-inner">
+									<div class="thumb">
+									<img src="./admin/newsimages/<?php echo $news_row['image']; ?>" alt="img" width="200px" height="150px">
+									</div>
+									<div class="details">
+										<h4><a href="news-details.php?news_id=<?php echo $news_row['news_id']; ?>"><?php echo $news_row['title']; ?></a></h4>
+										<a class="read-more-text" href="news-details.php?news_id=<?php echo $news_row['news_id']; ?>">READ MORE</a>
+									</div>
+								</div>
+							</div>
+							<?php
+									}
+								}
+								else {
+									echo "<p>No news available.</p>";
+								}
+							?>
+					</div>
+				</div>
+   			</div>
+    	<!-- news end-->
+
+		<!-- articles start -->
+		<div class="blog-area pd-top-115 pd-bottom-90">
+				<div class="container p-sm-0">
+					<div class="row justify-content-center">
+						<div class="col-lg-6">
+							<div class="section-title text-center">
+								<h2 class="title">LATEST ARTICLES</h2>
+							</div>
+						</div>
+					</div>
+					<div class="row justify-content-center">
+							<?php
+								$query = "SELECT * FROM articles WHERE status = 'published'";
+								$result = $conn->query($query);
+
+								if ($result->num_rows > 0) {
+									while ($articles_row = $result->fetch_assoc()) {
+							?>
+							<div class="col-lg-4 col-md-6">
+								<div class="single-blog-inner">
+									<div class="thumb">
+									<img src="./admin/articlesimages/<?php echo $articles_row['image']; ?>" alt="img" width="200px" height="150px">
+									</div>
+									<div class="details">
+										<h4><a href="articles-details.php?article_id=<?php echo $articles_row['article_id']; ?>"><?php echo $articles_row['title']; ?></a></h4>
+										<a class="read-more-text" href="articles-details.php?article_id=<?php echo $articles_row['article_id']; ?>">READ MORE</a>
+									</div>
+								</div>
+							</div>
+							<?php
+									}
+								}
+								else {
+									echo "<p>No articles available.</p>";
+								}
+							?>
+					</div>
+				</div>
+   			</div>
+   	    <!-- articles end-->
+
         <!-- Footer Start -->
       	<?php include('./footer.php'); ?>
 

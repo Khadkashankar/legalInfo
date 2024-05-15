@@ -53,7 +53,6 @@ $result = $conn->query($query);
 							<tr>
 								<th>S.N</th>
 								<th>Articles Title</th>
-								<th>Content</th>
 								<th>Description</th>
 								<th>Image</th>
 								<th>Status</th>
@@ -68,12 +67,11 @@ $result = $conn->query($query);
 									echo "<tr>";
 									echo "<td>" . $i++ . "</td>";
 									echo "<td>" . $row["title"] . "</td>";
-									echo "<td>" . $row["content"] . "</td>";
 									echo "<td>" . $row["description"] . "</td>";
 									echo "<td><img src='./articlesimages/" . $row["image"] . "' alt='image' style='width: 100px; height: auto;'></td>";
 									echo "<td>" . $row["status"] . "</td>";
 									echo "<td>";
-									echo "<a href='#' data-toggle='modal' data-target='#editArticlesModal' data-id='" . $row['article_id'] . "' data-title='" . $row['title'] . "' data-content='" . $row['content'] . "' data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
+									echo "<a href='#' data-toggle='modal' data-target='#editArticlesModal' data-id='" . $row['article_id'] . "' data-title='" . $row['title'] . "'  data-description='" . $row['description'] . "' data-image='" . $row['image'] . "' data-status='" . $row['status'] . "'>
 												<i class='fas fa-edit'></i>
 												</a>";
 									echo "&nbsp;&nbsp;&nbsp;&nbsp;";
@@ -114,12 +112,6 @@ $result = $conn->query($query);
 							<input type="text" class="form-control" id="editTitle" name="title">
 							<div id="invalid-editTitle" style="color:red"></div><br>
 						</div>
-						<div class="form-group">
-								<label for="editContent">Content</label>
-								<div id="editContentEditor"></div>
-								<input type="hidden" id="editContent" name="content">
-								<div id="invalid-editContent" style="color:red"></div><br>
-                    		</div>
                     			<div class="form-group">
 									<label for="editDescription">Description</label>
 									<div id="editDescriptionEditor"></div>
@@ -168,12 +160,6 @@ $result = $conn->query($query);
                         <input type="text" class="form-control" id="addTitle" name="title">
                         <div id="invalid-addTitle" style="color:red"></div><br>
                     </div>
-                    	<div class="form-group">
-							<label for="addContent">Content</label>
-							<div id="addContentEditor"></div>
-								<input type="hidden" id="addContent" name="content">
-								<div id="invalid-addContent" style="color:red"></div><br>
-						</div>
 						<div class="form-group">
 							<label for="addDescription">Description</label>
 							<div id="addDescriptionEditor"></div>
@@ -229,7 +215,6 @@ $result = $conn->query($query);
 			var button = $(event.relatedTarget);
 			var id = button.data('id');
 			var title = button.data('title');
-			var content = button.data('content');
 			var description = button.data('description');
 			var image = button.data('image');
 			var status = button.data('status');
@@ -255,26 +240,6 @@ $result = $conn->query($query);
 									console.error('Error fetching image:', error);
 								});
 
-			if (content) {
-					if (!modal.data('contentEditor')) {
-						ClassicEditor
-							.create(document.querySelector('#editContentEditor'))
-							.then(editor => {
-								modal.data('contentEditor', editor);
-								editor.setData(content);
-								editor.model.document.on('change', () => {
-									$('#editContent').val(editor.getData());
-								});
-							modal.find('.modal-body #editContent').val(content);
-
-							})
-							.catch(error => {
-								console.error(error);
-							});
-					} else {
-						modal.data('contentEditor').setData(content);
-					}
-				}
 
 			if (description) {
 				if (!modal.data('descriptionEditor')) {
@@ -302,7 +267,6 @@ $result = $conn->query($query);
 		function saveChanges() {
 					var articlesId = $('#editId').val();
 					var title = $('#editTitle').val();
-					var content = $('#editContent').val();
 					var description = $('#editDescription').val();
 					var image = $("#editImage")[0].files[0];
 					var status = $('#editStatus').val();
@@ -333,7 +297,6 @@ $result = $conn->query($query);
 								var formData = new FormData();
 								formData.append('id', articlesId);
 								formData.append('title', title);
-								formData.append('content', content);
 								formData.append('description', description);
 								formData.append('image', image);
 								formData.append('status', status);
@@ -397,13 +360,11 @@ $result = $conn->query($query);
 		//function to add new lawyer
 		function addArticles() {
 					var title = $('#addTitle').val();
-					var content = $('#addContent').val();
 					var description = $('#addDescription').val();
 					var image = $("#addImage")[0].files[0];
 					var status = $('#addStatus').val();
 
 						console.log(description);
-						console.log(content);
 					var isValid = true;
 
 					if (!title) {
@@ -431,7 +392,6 @@ $result = $conn->query($query);
 					if (isValid) {
 						var formData = new FormData();
 						formData.append('title', title);
-						formData.append('content', content);
 						formData.append('description', description);
 						formData.append('image', image);
 						formData.append('status', status);
@@ -480,14 +440,14 @@ $result = $conn->query($query);
 		}
 
 		  // clear the error when the field is input for edit
-			$("#addTitle, #addContent, #addDescription, #addImage, #addStatus").on("input", function () {
+			$("#addTitle, #addDescription, #addImage, #addStatus").on("input", function () {
 						var field = $(this).attr("id");
 						$("#invalid-" + field).text("");
 			});
 
 
 		  // clear the error when the field is input for add
-		  $("#addTitle, #addContent, #addDescription, #addImage, #addStatus").on("input", function () {
+		  $("#addTitle, #addDescription, #addImage, #addStatus").on("input", function () {
 					var field = $(this).attr("id");
 					$("#invalid-" + field).text("");
     	});

@@ -4,7 +4,7 @@
 				<div class="row">
 					<?php
 						// session_start();
-				include('./includes/connection.php');
+						include('./includes/connection.php');
 							if(isset($_GET['id']) && is_numeric($_GET['id'])) {
 								$lawyer_id = $_GET['id'];
 								$query = "SELECT * FROM lawyers WHERE lawyer_id = $lawyer_id";

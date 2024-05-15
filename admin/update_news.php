@@ -4,7 +4,6 @@ include('../includes/connection.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newsId = $_POST['id'];
     $title = $_POST['title'];
-    $content = $_POST['content'];
     $description = $_POST['description'];
     $status = $_POST['status'];
 
@@ -14,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $query = "UPDATE news SET
                 title = '$title',
-                content = '$content',
                 description = '$description',
                 image = '$image',
                 status = '$status'
