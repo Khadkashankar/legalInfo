@@ -93,11 +93,6 @@ if (!isset($_SESSION['id'] ) ) {
 
     <!-- Template Javascript -->
     <script src="assets/js/main.js"></script>
-
-
-    <!-- Template Javascript -->
-    <script src="assets/js/main.js"></script>
-
 </body>
 
 </html>

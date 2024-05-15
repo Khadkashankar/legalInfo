@@ -83,12 +83,12 @@ if (!isset($_SESSION['id'] ) ) {
 									</thead>
 								<tbody>
 									<?php
+									   include('./includes/connection.php');
 										$query = "SELECT appointments.*, lawyers.name AS lawyer_name
 										FROM appointments
 										INNER JOIN lawyers ON appointments.lawyer_id = lawyers.lawyer_id
 										WHERE appointments.user_id = {$_SESSION['id']}";
 										$result = $conn->query($query);
-
 										if ($result && $result->num_rows > 0) {
 											while ($row = $result->fetch_assoc()) {
 												echo "<tr>";
@@ -96,13 +96,15 @@ if (!isset($_SESSION['id'] ) ) {
 												echo "<td>" . $row['appointment_date'] . "</td>";
 												echo "<td>" . $row['additional_information'] . "</td>";
 												echo "<td>" . $row['status'] . "</td>";
-												echo "<td><a href='#' class='btn btn-primary'>View Appointment</a></td>";
+												echo "<td>";
+												echo "<button class='btn btn-sm btn-danger' onclick='cancelAppointment(" . $row['appointment_id'] . ")'>Delete</button>";
+												echo "</td>";
 												echo "</tr>";
 											}
 										} else {
 											echo "<tr><td colspan='5'>No appointments found.</td></tr>";
 										}
-                           			 ?>
+                           			?>
                         </tbody>
 							</table>
 						</div>
@@ -132,11 +134,34 @@ if (!isset($_SESSION['id'] ) ) {
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
-
-    <!-- Template Javascript -->
-    <script src="assets/js/main.js"></script>
-
-
+<script>
+			// Function to cancel appointment
+			function cancelAppointment(appointmentId) {
+					Swal.fire({
+						title: 'Are you sure?',
+						text: 'This appointment will be cancelled!',
+						icon: 'warning',
+						showCancelButton: true,
+						confirmButtonColor: '#3085d6',
+						cancelButtonColor: '#d33',
+						confirmButtonText: 'Yes, cancel it!'
+					}).then((result) => {
+						if (result.isConfirmed) {
+							$.ajax({
+								type: 'POST',
+								url: 'delete-appointment.php',
+								data: { appointment_id: appointmentId },
+								success: function(response) {
+									location.reload();
+								},
+								error: function(xhr, status, error) {
+									console.error(xhr.responseText);
+								}
+							});
+						}
+					});
+			}
+</script>
     <!-- Template Javascript -->
     <script src="assets/js/main.js"></script>
 

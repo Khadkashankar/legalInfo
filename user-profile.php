@@ -1,8 +1,14 @@
-
 <?php
-// session_start();
+
+session_start();
+
+if (!isset($_SESSION['id'] ) ) {
+    header("Location: index.php");
+    exit();
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -35,6 +41,7 @@
 
     <!-- Template Stylesheet -->
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -46,57 +53,89 @@
             </div>
         </div>
 
-        <!-- Navbar & Hero Start -->
-				<?php
-					if (!isset($_SESSION['name'])) {
-						include('header.php');
-					} else {
-						include('logged-in-header.php');
-					}
+			<!-- Navbar & Hero Start -->
+
+			<?php
+                if (!isset($_SESSION['name'])) {
+                    include('header.php');
+                } else {
+                    include('logged-in-header.php');
+                }
                 ?>
 
-		<div class="container-xxl pt-5 pb-3">
-    <div class="container">
+				<div class="container">
+				<div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h5 class="section-title ff-secondary text-center text-primary fw-normal">Here is your profile</h5>
+            <h1 class="mb-5">My Profile</h1>
 
-        <div class="row g-4">
-	<?php
-		include('./includes/connection.php');
-		$result = null;
-		if(isset($_POST['query'])) {
-			$search_query = $_POST['query'];
-			$query = "SELECT * FROM lawyers WHERE LOWER(name) LIKE '%$search_query%' OR LOWER(location) LIKE '%$search_query%'";
-			$result = $conn->query($query);
-		}
-		if ($result && $result->num_rows > 0) {
-		while ($row = $result->fetch_assoc()) {
-			// Display lawyer information
-        echo "<div class='col-lg-3 col-md-6'>
-                <div class='team-item text-center rounded bg-light p-4'>
-                    <div class='rounded-circle overflow-hidden mx-auto mb-3 border border-primary' style='width: 100px; height: 100px;'>
-                        <img class='img-fluid' src='./lawyerimages/" . $row['profile_picture'] . "' alt='" . $row['name'] . "'>
-                    </div>
-                    <h5 class='mb-0'>" . $row['name'] . "</h5>
-                    <br>
-                    <b>Contact Number: </b><small class='text-muted'>" . $row['contact_number'] . "</small> <br>
-                    <b>Location:</b><small class='text-muted'>" . $row['location'] . "</small> <br>
-                    <b>Specialization: </b><small class='text-muted'>" . $row['specialization'] . "</small> <br>
-                    <small class='text-muted'>" . $row['experience_years'] . "</small><b> Years Experience</b>
-                    <div class='mt-3'>
-                        <a class='btn btn-sm btn-info' href='./single-lawyer.php?id=" . $row['lawyer_id'] . "'><i class='fa fa-street-view'></i>&nbsp; View Full Profile</a>
-                    </div>
-                </div>
-            </div>";
-    }
-} else {
-    echo "<p class='col-12'>No lawyers found.</p>";
-    }
-?>
+			<section>
+			<div class="container">
+				<div class="row">
+					<?php
+						include('./includes/connection.php');
+								$query = "SELECT * FROM users WHERE user_id = {$_SESSION['id']}";
+								$result = $conn->query($query);
 
-        </div>
-    </div>
-</div>
+								if ($result && $result->num_rows > 0) {
+									while($row = $result->fetch_assoc()) {
+										?>
+									<div class="col-md-9">
+										<div class="mainprofile">
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="name" class="fw-bold">Name:</label>
+												</div>
+												<div class="col-md-8">
+													<p><?php echo $row["name"]; ?></p>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="email" class="fw-bold">Email:</label>
+												</div>
+												<div class="col-md-8">
+													<p><?php echo $row["email"]; ?></p>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="contact" class="fw-bold">Contact:</label>
+												</div>
+												<div class="col-md-8">
+													<p><?php echo $row["phone_number"]; ?></p>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="address" class="fw-bold">Address:</label>
+												</div>
+												<div class="col-md-8">
+													<p><?php echo $row["address"]; ?></p>
+												</div>
+											</div>
+											<div class="row mb-3">
+												<div class="col-md-4">
+													<label for="gender" class="fw-bold">Gender:</label>
+												</div>
+												<div class="col-md-8">
+													<p><?php echo $row["gender"]; ?></p>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12 text-end">
+													
+												</div>
+											</div>
+										</div>
+									</div>
+						<?php
+						}
+					}
 
-        <!-- Footer Start -->
+					?>
+				</div>
+			</div>
+</section>
       	<?php include('./footer.php'); ?>
 
 
@@ -116,10 +155,15 @@
     <script src="assets/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 
+<script>
+
+</script>
     <!-- Template Javascript -->
     <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>

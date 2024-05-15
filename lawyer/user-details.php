@@ -9,7 +9,6 @@ if (!isset($_SESSION['login'])) {
 include('../includes/connection.php');
 $lawyer_id = $_SESSION['id'];
 
-// Fetch user records from the database
 $query = "SELECT DISTINCT u.* FROM users u
 INNER JOIN appointments a ON u.user_id = a.user_id
 WHERE a.lawyer_id = $lawyer_id";

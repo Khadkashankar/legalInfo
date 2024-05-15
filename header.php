@@ -14,7 +14,6 @@ if (isset($_POST['login'])) {
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
-        // Fetch user data
         $user = $result->fetch_assoc();
         $_SESSION['id'] = $user['user_id'];
         $_SESSION['name'] = $user['name'];

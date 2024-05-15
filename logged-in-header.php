@@ -27,7 +27,7 @@ if (!isset($_SESSION['name'])) {
 										?>
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-									<li><a class="dropdown-item" href="#">Profile</a></li>
+									<li><a class="dropdown-item" href="user-profile.php">Profile</a></li>
 									<li><hr class="dropdown-divider"></li>
 									<li><a class="dropdown-item" href="user-logout.php">Logout</a></li>
 								</ul>

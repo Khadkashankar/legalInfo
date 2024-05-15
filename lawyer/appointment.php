@@ -11,7 +11,6 @@ if (!isset($_SESSION['id'] ) ) {
 
 $id = $_SESSION['id'];
 
-// Fetch user records from the database
 $query = "SELECT * FROM appointments WHERE lawyer_id =$id";
 $result = $conn->query($query);
 
@@ -150,7 +149,6 @@ $result = $conn->query($query);
 							location.reload();
 						},
 						error: function(xhr, status, error) {
-							// Handle error response
 							console.error(xhr.responseText);
 						}
 					});
@@ -170,13 +168,12 @@ $result = $conn->query($query);
 						if (result.isConfirmed) {
 							$.ajax({
 								type: 'POST',
-								url: 'cancel-appointment.php', // Your PHP script to handle cancellation
+								url: 'cancel-appointment.php',
 								data: { appointment_id: appointmentId },
 								success: function(response) {
 									location.reload();
 								},
 								error: function(xhr, status, error) {
-									// Handle error response
 									console.error(xhr.responseText);
 								}
 							});
@@ -186,35 +183,28 @@ $result = $conn->query($query);
 
    				 // Function to view user details
 					function viewDetails(userId, appointmentId) {
-   						 // Fetch user details
 						jQuery.ajax({
 							type: 'POST',
 							url: 'fetch-user-details.php',
 							data: { user_id: userId },
 							success: function(userResponse) {
-								// Populate modal with user details
 								$('#userDetailsModal .modal-body #userDetails').html(userResponse);
 
-								// Fetch appointment details
 								$.ajax({
 									type: 'POST',
 									url: 'fetch-appointment-details.php',
 									data: { appointment_id: appointmentId },
 									success: function(appointmentResponse) {
-										// Populate modal with appointment details
 										$('#userDetailsModal .modal-body #appointmentDetails').html(appointmentResponse);
 
-										// Show the modal
 										$('#userDetailsModal').modal('show');
 									},
 									error: function(xhr, status, error) {
-										// Handle error response for appointment details
 										console.error(xhr.responseText);
 									}
 								});
 							},
 							error: function(xhr, status, error) {
-								// Handle error response for user details
 								console.error(xhr.responseText);
 							}
 						});
