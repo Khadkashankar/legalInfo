@@ -54,7 +54,6 @@ CREATE TABLE IF NOT EXISTS `appointments` (
 CREATE TABLE IF NOT EXISTS `articles` (
     `article_id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(255),
-    `content` TEXT,
     `description` TEXT,
     `image` VARCHAR(255),
     `status` ENUM('draft', 'published') DEFAULT 'published',
@@ -65,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `articles` (
 CREATE TABLE IF NOT EXISTS `news` (
     `news_id` INT AUTO_INCREMENT PRIMARY KEY,
     `title` VARCHAR(255),
-    `content` TEXT,
     `description` TEXT,
     `image` VARCHAR(255),
     `status` ENUM('draft', 'published') DEFAULT 'published',

@@ -50,43 +50,39 @@
 					}
                 ?>
 
-		 <!-- About Start -->
-		 <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5 align-items-center">
-                    <div class="col-lg-6">
-                        <div class="row g-3">
-                            <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.1s" src="">
-                            </div>
-                            <div class="col-6 text-start">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.3s" src="" style="margin-top: 25%;">
-                            </div>
-                            <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-75 wow zoomIn" data-wow-delay="0.5s" src="">
-                            </div>
-                            <div class="col-6 text-end">
-                                <img class="img-fluid rounded w-100 wow zoomIn" data-wow-delay="0.7s" src="">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <h5 class="section-title ff-secondary text-start text-primary fw-normal">About Us</h5>
-                        <!-- <h1 class="mb-4">Welcome to <i class="fa fa-utensils text-primary me-2"></i>Legal </h1> -->
-                        <p class="mb-4">Legal Advisor is revolutionizing legal services through its innovative online platform, offering
-									accessible and user-friendly legal information and services.</p>
-                        <p class="mb-4">It provides a comprehensive range
-								of resources for individuals seeking guidance on personal or business-related legal matters.</p>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="about-us.php">Read More</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About End -->
+				<div class="container">
+					<div class="contact-area mg-top-120 mb-120">
+						<div class="row g-0 justify-content-center">
+							<div class="col-lg-7">
+								<form class="contact-form text-center">
+									<h3>GET IN TOUCH</h3>
+									<div class="row">
+										<div class="col-md-6">
+											<div class="mb-3">
+												<input type="text" id="username" class="form-control" placeholder="Your name" required>
+											</div>
+										</div>
+										<div class="col-md-6">
+											<div class="mb-3">
+												<input type="email" id="useremail" class="form-control" placeholder="Your email" required>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="mb-3">
+												<textarea class="form-control" id="usermessage" rows="5" placeholder="Write message" required></textarea>
+											</div>
+										</div>
+										<div class="col-12">
+											<button type="submit" class="btn btn-primary" id="send-message">SEND MESSAGE</button>
+										</div>
+									</div>
+								</form>
+							</div>
 
-		   <!-- Team Start -->
-		<?php include('./show-lawyers.php'); ?>
-        <!-- Team End -->
+						</div>
+					</div>
+				</div>
+
 
         <!-- Footer Start -->
       	<?php include('./footer.php'); ?>
@@ -109,9 +105,70 @@
     <script src="assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
+	<script>
+		$(document).ready(function() {
+			$('#send-message').on('click', function(e) {
+				e.preventDefault();
 
+				var name = $('#username').val();
+				var email = $('#useremail').val();
+				var message = $('#usermessage').val();
+
+				if (name === '' || email === '' || message === '') {
+					Swal.fire({
+						title: 'Error!',
+						text: 'Please fill in all fields.',
+						icon: 'error',
+						confirmButtonText: 'OK'
+					});
+					return;
+				}
+
+				$.ajax({
+					type: 'POST',
+					url: 'send-email.php',
+					data: {
+						name: name,
+						email: email,
+						message: message
+					},
+					success: function(response) {
+						console.log(response);
+						if (response === 'success') {
+							Swal.fire({
+								title: 'Success!',
+								text: 'Your message has been sent successfully.',
+								icon: 'success',
+								confirmButtonText: 'OK'
+							});
+						} else {
+							Swal.fire({
+								title: 'Error!',
+								text: 'Failed to send message. Please try again later.',
+								icon: 'error',
+								confirmButtonText: 'OK'
+							});
+						}
+					},
+					error: function(xhr, status, error) {
+						console.log(error);
+						Swal.fire({
+							title: 'Error!',
+							text: 'Failed to send message. Please try again later.',
+							icon: 'error',
+							confirmButtonText: 'OK'
+						});
+					}
+				});
+			});
+		});
+	</script>
+
+
+</script>
     <!-- Template Javascript -->
     <script src="assets/js/main.js"></script>
+
 </body>
 
 </html>
