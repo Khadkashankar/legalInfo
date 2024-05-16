@@ -25,6 +25,21 @@
         }
     });
 
+    window.onload = function() {
+        var currentURL = window.location.href;
+
+        if (currentURL.includes("about-us.php") ||
+            currentURL.includes("contact-us.php") ||
+            currentURL.includes("single-lawyer.php") ||
+            currentURL.includes("news-details.php") ||
+            currentURL.includes("articles-details.php") ||
+            currentURL.includes("user-profile.php") ||
+            currentURL.includes("my-appointment.php")) {
+            document.getElementById("searchForm").style.display = "none";
+        }
+    };
+
+
 
     // Dropdown on mouse hover
     const $dropdown = $(".dropdown");

@@ -87,7 +87,7 @@
 		   <!-- Team Start -->
 		<?php include('./show-lawyers.php'); ?>
         <!-- Team End -->
-
+<br><br>
 
 		<!--news-area start-->
 		  	<div class="blog-area pd-top-115 pd-bottom-90">
@@ -128,6 +128,7 @@
 					</div>
 				</div>
    			</div>
+			<br><br> <br>
     	<!-- news end-->
 
 		<!-- articles start -->

@@ -73,12 +73,12 @@ mysqli_close($conn);
 					</div>
 				</div>
 				<div class="d-flex justify-content-center">
-			<form id="searchForm" action="search-lawyers.php" method="POST" class="w-50">
-				<div class="input-group">
-					<input type="text" class="form-control" id="lawyerSearchInput" placeholder="Search lawyers by name or location" name="query" required>
-					<button type="submit" class="btn btn-primary">Search</button>
-				</div>
-			</form>
+				<form id="searchForm" action="search-lawyers.php" method="POST" class="w-50">
+					<div class="input-group">
+						<input type="text" class="form-control" id="lawyerSearchInput" placeholder="Search lawyers by name or location" name="query" required>
+						<button type="submit" class="btn btn-primary">Search</button>
+					</div>
+				</form>
 			</div>
 		</div>
 

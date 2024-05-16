@@ -140,6 +140,8 @@
 								text: 'Your message has been sent successfully.',
 								icon: 'success',
 								confirmButtonText: 'OK'
+							}).then(function() {
+								window.location.reload();
 							});
 						} else {
 							Swal.fire({

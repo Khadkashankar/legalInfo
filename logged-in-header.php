@@ -46,6 +46,12 @@ if (!isset($_SESSION['name'])) {
 										<img class="img-fluid" src="./assets/img/justice.png" height="150px" width="150px">
 									</div>
 								</div>
+								<form id="searchForm" action="search-in.php" method="POST" class="w-74">
+									<div class="input-group">
+										<input type="text" class="form-control" id="lawyerSearchInput" placeholder="Search lawyers by name or location" name="query" required>
+										<button type="submit" class="btn btn-primary">Search</button>
+									</div>
+								</form>
 							</div>
 						</div>
-			</div>
+</div>
