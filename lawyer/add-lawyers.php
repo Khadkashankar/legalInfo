@@ -7,8 +7,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST['password'];
     $contact = $_POST['contact'];
     $location = $_POST['location'];
-    $specialization = $_POST['specialization'];
-    $description = $_POST['description'];
+	$specialization = mysqli_real_escape_string($conn, $_POST['specialization']);
+	$description = mysqli_real_escape_string($conn, $_POST['description']);
     $barAssociation = $_POST['barAssociationNumber'];
     $experience = $_POST['experienceYear'];
 
@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     move_uploaded_file($_FILES["image"]["tmp_name"], "../lawyerimages/" . $_FILES["image"]["name"]);
 
     $query = "INSERT INTO lawyers (name, email, password, contact_number, location, specialization, description, profile_picture, bar_association_number, experience_years)
-              VALUES ('$name', '$email', '$password', '$contact', '$location', '$specialization', '$description', '$images', '$barAssociation', '$experience')";
+              VALUES ('$name', '$email', '$password', '$contact', '$location', '$specialization', '$des', '$images', '$barAssociation', '$experience')";
 
    $result = $conn->query($query);
 
