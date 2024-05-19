@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $message = $_POST["message"];
 
-    $to = "imshankar02@gmail.com";
+    $to = "thapapuja2018@gmail.com";
     $subject = "Contact Form Submission";
     $body = "Name: $name\n<br>Email: $email\n<br>Message: $message";
 
@@ -20,8 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mail->isSMTP();
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
-    $mail->Username = 'imshankar02@gmail.com';
-    $mail->Password = 'crgc kwfd bkhm ncgx';
+    $mail->Username = 'thapapuja2018@gmail.com';
+    $mail->Password = 'daao vszz lgcm ajdm';
     $mail->SMTPSecure = 'ssl';
     $mail->Port = 465;
 
